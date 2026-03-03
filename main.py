@@ -69,6 +69,7 @@ import numpy as np
 DEFAULT_SEASONS = ["2324", "2425"]  # 2023/24 und 2024/25
 DEFAULT_LEAGUE = "GER-Bundesliga"
 DEFAULT_SOURCE_PRIORITY = ["espn", "fbref"]
+RQ4_MIN_MATCHES_FOR_LEADERBOARD = 5
 ESPN_MATCH_SUMMARY_URL = (
     "https://site.api.espn.com/apis/site/v2/sports/soccer/{league_id}/summary?event={game_id}"
 )
@@ -267,6 +268,13 @@ def cache_file_for_season(cache_dir: Path, league: str, season: str) -> Path:
     return cache_dir / f"{safe_league}_{season}_players.csv"
 
 
+def whoscored_rating_cache_file_for_season(
+    cache_dir: Path, league: str, season: str
+) -> Path:
+    safe_league = league.replace("/", "_").replace(" ", "_")
+    return cache_dir / f"{safe_league}_{season}_whoscored_ratings.csv"
+
+
 def build_requests_proxies(proxy: str | None) -> dict[str, str] | None:
     if not proxy:
         return None
@@ -307,9 +315,17 @@ def should_log_progress(current: int, total: int, interval: int) -> bool:
 
 def format_progress(label: str, current: int, total: int) -> str:
     if total <= 0:
-        return f"[progress] {label}: 0/0 (100.0%)"
-    percent = (current / total) * 100
-    return f"[progress] {label}: {current}/{total} ({percent:.1f}%)"
+        return f"[progress] {label}: [{'#' * 24}] 0/0 (100.0%, remaining=0)"
+    safe_current = max(0, min(int(current), int(total)))
+    percent = (safe_current / total) * 100
+    remaining = max(0, int(total) - safe_current)
+    bar_width = 24
+    filled = int(round((safe_current / total) * bar_width))
+    bar = "#" * filled + "-" * (bar_width - filled)
+    return (
+        f"[progress] {label}: [{bar}] {safe_current}/{total} "
+        f"({percent:.1f}%, remaining={remaining})"
+    )
 
 
 def load_players_from_fbref(config: Config, season: str, sd_module) -> pd.DataFrame:
@@ -388,10 +404,23 @@ def load_players_from_espn(config: Config, season: str, sd_module) -> pd.DataFra
     total_matches = len(schedule)
     summary_cache_hits = 0
     summary_downloads = 0
+    summary_expected_downloads = (
+        total_matches
+        if config.refresh
+        else int(
+            sum(
+                1
+                for _, match in schedule.iterrows()
+                if not (summary_cache_dir / f"{str(match['game_id'])}.json").exists()
+            )
+        )
+    )
+    summary_poll_left = summary_expected_downloads
     summary_interval = max(1, total_matches // 20)
     print(
         f"[info] ESPN Saison {season}: Verarbeite {total_matches} Spiele "
-        "(Match-Summaries)."
+        "(Match-Summaries). "
+        f"Erwartete Polls: {summary_expected_downloads}."
     )
     for idx, (_, match) in enumerate(schedule.iterrows(), start=1):
         game_id = str(match["game_id"])
@@ -409,11 +438,13 @@ def load_players_from_espn(config: Config, season: str, sd_module) -> pd.DataFra
             summary_cache_hits += 1
         else:
             summary_downloads += 1
+            summary_poll_left = max(0, summary_poll_left - 1)
         if should_log_progress(idx, total_matches, summary_interval):
             print(
                 (
                     f"{format_progress('Match-Summaries', idx, total_matches)} | "
-                    f"cache={summary_cache_hits}, download={summary_downloads}"
+                    f"cache={summary_cache_hits}, polled={summary_downloads}, "
+                    f"poll_left={summary_poll_left}"
                 ),
                 flush=True,
             )
@@ -462,10 +493,22 @@ def load_players_from_espn(config: Config, season: str, sd_module) -> pd.DataFra
     total_athletes = len(unique_player_ids)
     athlete_cache_hits = 0
     athlete_downloads = 0
+    athlete_expected_downloads = (
+        total_athletes
+        if config.refresh
+        else int(
+            sum(
+                1
+                for player_id in unique_player_ids
+                if not (athlete_cache_dir / f"{player_id}.json").exists()
+            )
+        )
+    )
+    athlete_poll_left = athlete_expected_downloads
     athlete_interval = max(1, total_athletes // 20)
     print(
         f"[info] ESPN Saison {season}: Verarbeite {total_athletes} Spielerprofile "
-        "(Athlete API)."
+        f"(Athlete API). Erwartete Polls: {athlete_expected_downloads}."
     )
     for idx, player_id in enumerate(unique_player_ids, start=1):
         athlete_url = ESPN_ATHLETE_URL.format(athlete_id=player_id)
@@ -495,11 +538,13 @@ def load_players_from_espn(config: Config, season: str, sd_module) -> pd.DataFra
             athlete_cache_hits += 1
         else:
             athlete_downloads += 1
+            athlete_poll_left = max(0, athlete_poll_left - 1)
         if should_log_progress(idx, total_athletes, athlete_interval):
             print(
                 (
                     f"{format_progress('Spielerprofile', idx, total_athletes)} | "
-                    f"cache={athlete_cache_hits}, download={athlete_downloads}"
+                    f"cache={athlete_cache_hits}, polled={athlete_downloads}, "
+                    f"poll_left={athlete_poll_left}"
                 ),
                 flush=True,
             )
@@ -559,6 +604,10 @@ def load_or_fetch_players_for_season(config: Config, season: str) -> pd.DataFram
                 "(unplausible Alterswerte erkannt)."
             )
         else:
+            print(
+                f"[info] Saison {season}: vorhandener Player-Cache verwendet "
+                "(poll_left=0)."
+            )
             return cached_df
 
     source_loaders = {
@@ -567,12 +616,16 @@ def load_or_fetch_players_for_season(config: Config, season: str) -> pd.DataFram
     }
     source_errors: list[str] = []
     final_df: pd.DataFrame | None = None
-    for source in config.source_priority:
+    total_sources = len(config.source_priority)
+    if total_sources > 0:
+        print(format_progress(f"Datenquellen Saison {season}", 0, total_sources))
+    for source_idx, source in enumerate(config.source_priority, start=1):
         loader = source_loaders[source]
         print(f"[info] Versuche Datenquelle '{source.upper()}' fuer Saison {season} ...")
         try:
             final_df = loader(config, season, sd)
             print(f"[ok] Datenquelle '{source.upper()}' erfolgreich fuer Saison {season}.")
+            print(format_progress(f"Datenquellen Saison {season}", source_idx, total_sources))
             break
         except Exception as exc:
             print(
@@ -580,6 +633,7 @@ def load_or_fetch_players_for_season(config: Config, season: str) -> pd.DataFram
                 f"({type(exc).__name__}): {exc}"
             )
             source_errors.append(f"{source.upper()}: {exc}")
+            print(format_progress(f"Datenquellen Saison {season}", source_idx, total_sources))
 
     if final_df is None:
         raise RuntimeError(
@@ -589,6 +643,240 @@ def load_or_fetch_players_for_season(config: Config, season: str) -> pd.DataFram
 
     final_df.to_csv(cache_file, index=False)
     return final_df
+
+
+def load_or_fetch_whoscored_ratings_for_season(
+    config: Config, season: str, sd_module
+) -> pd.DataFrame:
+    cache_cols = [
+        "season",
+        "season_label",
+        "game_id",
+        "game",
+        "team",
+        "home_away",
+        "player",
+        "player_id",
+        "overall_rating",
+        "is_starting_xi",
+        "is_man_of_the_match",
+    ]
+    cache_file = whoscored_rating_cache_file_for_season(
+        config.player_cache_dir, config.league, season
+    )
+    if cache_file.exists() and not config.refresh:
+        cached_df = pd.read_csv(cache_file)
+        missing_cols = [c for c in cache_cols if c not in cached_df.columns]
+        if not missing_cols:
+            return cached_df[cache_cols].copy()
+        print(
+            f"[warn] Verwerfe unvollstaendigen WhoScored-Cache fuer Saison {season}: "
+            + ", ".join(missing_cols)
+        )
+
+    whoscored = sd_module.WhoScored(
+        leagues=config.league,
+        seasons=[season],
+        no_cache=config.no_cache,
+        no_store=config.no_store,
+        proxy=config.proxy,
+    )
+    print(f"[info] WhoScored Saison {season}: Lade Spielplan ...")
+    schedule = whoscored.read_schedule(force_cache=not config.refresh).reset_index()
+    if schedule.empty:
+        return pd.DataFrame(columns=cache_cols)
+    required_schedule_cols = {"game_id", "home_team", "away_team"}
+    missing_schedule_cols = [c for c in required_schedule_cols if c not in schedule.columns]
+    if missing_schedule_cols:
+        raise RuntimeError(
+            "WhoScored-Spielplan enthaelt nicht alle erwarteten Spalten: "
+            + ", ".join(missing_schedule_cols)
+        )
+    schedule["game_id"] = schedule["game_id"].apply(_parse_int)
+    schedule = schedule.dropna(subset=["game_id"]).copy()
+    if schedule.empty:
+        return pd.DataFrame(columns=cache_cols)
+    schedule["game_id"] = schedule["game_id"].astype(int)
+    schedule["season"] = schedule["season"].astype(str)
+
+    league_key = (
+        str(schedule.iloc[0]["league"]).strip() if "league" in schedule.columns else config.league
+    )
+    events_dir = (
+        config.soccerdata_cache_dir
+        / "data"
+        / "WhoScored"
+        / "events"
+        / f"{league_key}_{season}"
+    )
+    game_ids = sorted(schedule["game_id"].dropna().astype(int).unique())
+    existing_ids = {gid for gid in game_ids if (events_dir / f"{gid}.json").exists()}
+    ids_to_fetch = game_ids if config.refresh else [gid for gid in game_ids if gid not in existing_ids]
+    print(
+        f"[info] WhoScored Saison {season}: Spiele={len(game_ids)}, "
+        f"cache={len(existing_ids)}, download={len(ids_to_fetch)}"
+    )
+    download_total = len(ids_to_fetch)
+    download_done = 0
+    if ids_to_fetch:
+        print(
+            f"{format_progress('WhoScored-Download', download_done, download_total)} | "
+            f"poll_left={max(0, download_total - download_done)}",
+            flush=True,
+        )
+        whoscored.read_events(
+            match_id=ids_to_fetch,
+            force_cache=not config.refresh,
+            output_fmt=None,
+            on_error="skip",
+        )
+        download_done = download_total
+        print(
+            f"{format_progress('WhoScored-Download', download_done, download_total)} | "
+            f"poll_left={max(0, download_total - download_done)}",
+            flush=True,
+        )
+    else:
+        print(
+            f"[info] WhoScored Saison {season}: Kein Polling noetig, alles aus Cache."
+        )
+
+    meta = schedule.drop_duplicates(subset=["game_id"], keep="first").set_index("game_id")
+    rows: list[dict] = []
+    total_games = len(game_ids)
+    interval = max(1, total_games // 20)
+    files_used = 0
+    for idx, game_id in enumerate(game_ids, start=1):
+        event_file = events_dir / f"{game_id}.json"
+        if not event_file.exists():
+            continue
+        files_used += 1
+        with event_file.open("r", encoding="utf-8") as f:
+            payload = json.load(f)
+
+        game_meta = meta.loc[game_id]
+        home_team = _fix_mojibake(str(game_meta.get("home_team") or "").strip())
+        away_team = _fix_mojibake(str(game_meta.get("away_team") or "").strip())
+        game_label = str(game_meta.get("game") or "").strip()
+        for side in ("home", "away"):
+            side_data = payload.get(side, {})
+            if not isinstance(side_data, dict):
+                continue
+            team_name = _fix_mojibake(str(side_data.get("name") or "").strip())
+            if not team_name:
+                team_name = home_team if side == "home" else away_team
+            players = side_data.get("players", [])
+            if not isinstance(players, list):
+                continue
+            for player_data in players:
+                if not isinstance(player_data, dict):
+                    continue
+                player_id = str(player_data.get("playerId") or "").strip()
+                player_name = _fix_mojibake(str(player_data.get("name") or "").strip())
+                overall_rating = extract_whoscored_overall_rating(player_data)
+                if not player_id or not player_name or overall_rating is None:
+                    continue
+                rows.append(
+                    {
+                        "season": str(season),
+                        "season_label": normalize_season_label(str(season)),
+                        "game_id": str(game_id),
+                        "game": game_label,
+                        "team": team_name,
+                        "home_away": side,
+                        "player": player_name,
+                        "player_id": player_id,
+                        "overall_rating": float(overall_rating),
+                        "is_starting_xi": bool(player_data.get("isFirstEleven")),
+                        "is_man_of_the_match": bool(player_data.get("isManOfTheMatch")),
+                    }
+                )
+        if should_log_progress(idx, total_games, interval):
+            print(
+                (
+                    f"{format_progress('WhoScored-Matches', idx, total_games)} | "
+                    f"parsed={files_used}, poll_left={max(0, download_total - download_done)}"
+                ),
+                flush=True,
+            )
+
+    if not rows:
+        return pd.DataFrame(columns=cache_cols)
+    out_df = pd.DataFrame.from_records(rows)
+    out_df = out_df.sort_values(
+        ["season", "home_away", "overall_rating", "player"],
+        ascending=[True, True, False, True],
+        kind="stable",
+    )
+    cache_file.parent.mkdir(parents=True, exist_ok=True)
+    out_df.to_csv(cache_file, index=False)
+    return out_df[cache_cols].copy()
+
+
+def compute_rq4_home_away_player_ratings(config: Config) -> pd.DataFrame:
+    if not ensure_package("soccerdata", "soccerdata"):
+        print("[warn] RQ4: Paket 'soccerdata' nicht verfuegbar.")
+        return empty_rq4_home_away_summary()
+
+    import soccerdata as sd
+
+    season_frames: list[pd.DataFrame] = []
+    total_seasons = len(config.seasons)
+    if total_seasons > 0:
+        print(format_progress("RQ4-Saisons", 0, total_seasons), flush=True)
+    for idx, season in enumerate(config.seasons, start=1):
+        print(f"[info] RQ4: Verarbeite Saison {season} ...")
+        try:
+            season_df = load_or_fetch_whoscored_ratings_for_season(config, season, sd)
+        except Exception as exc:
+            print(
+                f"[warn] RQ4: WhoScored-Abruf fuer Saison {season} fehlgeschlagen "
+                f"({type(exc).__name__}): {exc}"
+            )
+        else:
+            if not season_df.empty:
+                season_frames.append(season_df)
+        finally:
+            print(format_progress("RQ4-Saisons", idx, total_seasons), flush=True)
+
+    if not season_frames:
+        return empty_rq4_home_away_summary()
+    match_df = pd.concat(season_frames, ignore_index=True)
+    if match_df.empty:
+        return empty_rq4_home_away_summary()
+    match_df["overall_rating"] = pd.to_numeric(match_df["overall_rating"], errors="coerce")
+    match_df = match_df.dropna(subset=["overall_rating"])
+    if match_df.empty:
+        return empty_rq4_home_away_summary()
+    match_df["is_starting_xi"] = match_df["is_starting_xi"].apply(_to_bool)
+    match_df["is_man_of_the_match"] = match_df["is_man_of_the_match"].apply(_to_bool)
+
+    rq4 = (
+        match_df.groupby(
+            ["season", "season_label", "home_away", "player", "player_id"], dropna=False
+        )
+        .agg(
+            matches=("game_id", "nunique"),
+            teams=("team", lambda s: int(pd.Series(s).dropna().nunique())),
+            avg_overall_rating=("overall_rating", "mean"),
+            median_overall_rating=("overall_rating", "median"),
+            best_overall_rating=("overall_rating", "max"),
+            worst_overall_rating=("overall_rating", "min"),
+            starts=("is_starting_xi", lambda s: int(pd.Series(s).sum())),
+            motm_awards=("is_man_of_the_match", lambda s: int(pd.Series(s).sum())),
+        )
+        .reset_index()
+    )
+    rq4["eligible_for_leaderboard"] = (
+        pd.to_numeric(rq4["matches"], errors="coerce").fillna(0).astype(int)
+        >= RQ4_MIN_MATCHES_FOR_LEADERBOARD
+    )
+    rq4 = rq4.sort_values(
+        ["season", "home_away", "avg_overall_rating", "matches", "player"],
+        ascending=[True, True, False, False, True],
+        kind="stable",
+    )
+    return rq4
 
 
 def compute_team_player_table(players_df: pd.DataFrame) -> pd.DataFrame:
@@ -673,6 +961,84 @@ def compute_season_and_global_summary(
         ]
     )
     return season_summary, global_summary
+
+
+def _parse_float(value: object) -> float | None:
+    try:
+        if value is None or pd.isna(value):
+            return None
+    except TypeError:
+        if value is None:
+            return None
+    text = str(value).strip()
+    if not text:
+        return None
+    try:
+        return float(text)
+    except ValueError:
+        return None
+
+
+def _to_bool(value: object) -> bool:
+    if isinstance(value, bool):
+        return value
+    try:
+        if value is None or pd.isna(value):
+            return False
+    except TypeError:
+        if value is None:
+            return False
+    text = str(value).strip().lower()
+    if text in {"1", "true", "t", "yes", "y"}:
+        return True
+    if text in {"0", "false", "f", "no", "n", ""}:
+        return False
+    numeric = _parse_float(text)
+    if numeric is not None:
+        return not math.isclose(numeric, 0.0, abs_tol=1e-12)
+    return False
+
+
+def extract_whoscored_overall_rating(player_data: dict) -> float | None:
+    stats = player_data.get("stats", {})
+    if not isinstance(stats, dict):
+        return None
+    ratings = stats.get("ratings")
+    if not isinstance(ratings, dict) or not ratings:
+        return None
+
+    points: list[tuple[int, float]] = []
+    for minute_raw, rating_raw in ratings.items():
+        minute = _parse_int(minute_raw)
+        rating = _parse_float(rating_raw)
+        if minute is None or rating is None:
+            continue
+        points.append((minute, rating))
+    if not points:
+        return None
+    points.sort(key=lambda item: item[0])
+    return points[-1][1]
+
+
+def empty_rq4_home_away_summary() -> pd.DataFrame:
+    return pd.DataFrame(
+        columns=[
+            "season",
+            "season_label",
+            "home_away",
+            "player",
+            "player_id",
+            "matches",
+            "teams",
+            "avg_overall_rating",
+            "median_overall_rating",
+            "best_overall_rating",
+            "worst_overall_rating",
+            "starts",
+            "motm_awards",
+            "eligible_for_leaderboard",
+        ]
+    )
 
 
 def _parse_int(value: object) -> int | None:
@@ -1062,6 +1428,7 @@ def save_outputs(
     team_summary: pd.DataFrame,
     season_summary: pd.DataFrame,
     global_summary: pd.DataFrame,
+    rq4_summary: pd.DataFrame,
     rq9_summary: pd.DataFrame,
     rq9_peak_summary: pd.DataFrame,
     rq9_player_age_profile: pd.DataFrame,
@@ -1072,6 +1439,7 @@ def save_outputs(
     team_summary.to_csv(output_dir / "bundesliga_team_age_summary.csv", index=False)
     season_summary.to_csv(output_dir / "bundesliga_season_age_summary.csv", index=False)
     global_summary.to_csv(output_dir / "bundesliga_global_age_summary.csv", index=False)
+    rq4_summary.to_csv(output_dir / "bundesliga_rq4_home_away_player_ratings.csv", index=False)
     rq9_summary.to_csv(output_dir / "bundesliga_rq9_age_vs_efficiency.csv", index=False)
     rq9_peak_summary.to_csv(
         output_dir / "bundesliga_rq9_optimal_age_summary.csv", index=False
@@ -1089,6 +1457,7 @@ def print_report(
     team_summary: pd.DataFrame,
     season_summary: pd.DataFrame,
     global_summary: pd.DataFrame,
+    rq4_summary: pd.DataFrame,
     rq9_summary: pd.DataFrame,
     rq9_peak_summary: pd.DataFrame,
     rq9_player_age_profile: pd.DataFrame,
@@ -1123,6 +1492,49 @@ def print_report(
     for col in ("avg_age", "min_age", "max_age"):
         global_display[col] = global_display[col].round(2)
     print(global_display.to_string(index=False))
+
+    print("\n=== RQ4: HOME/AWAY-LEISTUNG NACH WHOSCORED-OVERALL-RATING ===")
+    if rq4_summary.empty:
+        print("[warn] Keine RQ4-Daten verfuegbar.")
+    else:
+        rq4_display = rq4_summary.copy()
+        for col in (
+            "avg_overall_rating",
+            "median_overall_rating",
+            "best_overall_rating",
+            "worst_overall_rating",
+        ):
+            rq4_display[col] = pd.to_numeric(rq4_display[col], errors="coerce").round(3)
+
+        eligible = rq4_display[
+            pd.to_numeric(rq4_display["matches"], errors="coerce")
+            >= RQ4_MIN_MATCHES_FOR_LEADERBOARD
+        ].copy()
+        if eligible.empty:
+            eligible = rq4_display.copy()
+        for (season_label, side), group in eligible.groupby(
+            ["season_label", "home_away"], sort=True
+        ):
+            print(
+                f"\n[{season_label}] {str(side).upper()} "
+                f"(mind. {RQ4_MIN_MATCHES_FOR_LEADERBOARD} Spiele)"
+            )
+            cols = [
+                "player",
+                "matches",
+                "avg_overall_rating",
+                "median_overall_rating",
+                "best_overall_rating",
+                "worst_overall_rating",
+                "starts",
+                "motm_awards",
+            ]
+            top_group = group.sort_values(
+                ["avg_overall_rating", "matches", "player"],
+                ascending=[False, False, True],
+                kind="stable",
+            ).head(10)
+            print(top_group[cols].to_string(index=False))
 
     print("\n=== RQ9: TEAMALTER VS EFFIZIENZ (TORE PRO SCHUSS) ===")
     rq9_display = rq9_summary.copy()
@@ -1195,10 +1607,12 @@ def main(argv: Iterable[str] | None = None) -> int:
     season_frames: list[pd.DataFrame] = []
     try:
         total_seasons = len(config.seasons)
+        if total_seasons > 0:
+            print(format_progress("Saisons gesamt", 0, total_seasons))
         for idx, season in enumerate(config.seasons, start=1):
-            print(format_progress("Saisons gesamt", idx, total_seasons))
             print(f"[info] Lade Saison {season} ...")
             season_frames.append(load_or_fetch_players_for_season(config, season))
+            print(format_progress("Saisons gesamt", idx, total_seasons))
     except Exception as exc:
         print(f"[error] Datenabruf fehlgeschlagen: {exc}")
         print(
@@ -1213,6 +1627,7 @@ def main(argv: Iterable[str] | None = None) -> int:
     player_table = compute_team_player_table(players_df)
     team_summary = compute_team_summary(players_df)
     season_summary, global_summary = compute_season_and_global_summary(players_df)
+    rq4_summary = compute_rq4_home_away_player_ratings(config)
     rq9_summary = compute_rq9_age_vs_efficiency(config, team_summary)
     rq9_peak_summary = compute_rq9_optimal_age_summary(rq9_summary)
     rq9_player_age_profile = compute_rq9_player_age_profile(config, players_df)
@@ -1225,6 +1640,7 @@ def main(argv: Iterable[str] | None = None) -> int:
         team_summary=team_summary,
         season_summary=season_summary,
         global_summary=global_summary,
+        rq4_summary=rq4_summary,
         rq9_summary=rq9_summary,
         rq9_peak_summary=rq9_peak_summary,
         rq9_player_age_profile=rq9_player_age_profile,
@@ -1236,6 +1652,7 @@ def main(argv: Iterable[str] | None = None) -> int:
         team_summary,
         season_summary,
         global_summary,
+        rq4_summary,
         rq9_summary,
         rq9_peak_summary,
         rq9_player_age_profile,
