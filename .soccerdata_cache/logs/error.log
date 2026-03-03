@@ -1,0 +1,165 @@
+ERROR 2026-03-03 21:05:11,908 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 1 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
+ERROR 2026-03-03 21:05:19,583 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 2 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
+ERROR 2026-03-03 21:05:26,752 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 3 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
+ERROR 2026-03-03 21:05:33,946 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 4 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
+ERROR 2026-03-03 21:05:41,115 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 5 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
+ERROR 2026-03-03 21:24:24,988 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 1 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
+ERROR 2026-03-03 21:24:32,193 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 2 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
+ERROR 2026-03-03 21:24:39,368 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 3 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
+ERROR 2026-03-03 21:24:46,560 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 4 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
+ERROR 2026-03-03 21:24:53,734 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 5 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
+ERROR 2026-03-03 21:30:48,146 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 1 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
+ERROR 2026-03-03 21:30:55,307 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 2 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
+ERROR 2026-03-03 21:31:02,530 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 3 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
+ERROR 2026-03-03 21:31:09,713 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 4 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
+ERROR 2026-03-03 21:31:16,873 [_common.py:_download_and_save:526]
+Error while scraping https://fbref.com/en/comps/. Retrying... (attempt 5 of 5).
+Traceback (most recent call last):
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\soccerdata\_common.py", line 506, in _download_and_save
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\models\response.py", line 207, in raise_for_status
+    raise HTTPError(
+    ...<6 lines>...
+    )
+tls_requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://fbref.com/en/comps/
