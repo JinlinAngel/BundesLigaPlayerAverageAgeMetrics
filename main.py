@@ -6,6 +6,7 @@ import json
 import os
 import subprocess
 import sys
+import math
 from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
@@ -62,6 +63,7 @@ for _import_name, _package_name in STARTUP_PACKAGES.items():
         )
 
 import pandas as pd
+import numpy as np
 
 
 DEFAULT_SEASONS = ["2324", "2425"]  # 2023/24 und 2024/25
@@ -673,17 +675,413 @@ def compute_season_and_global_summary(
     return season_summary, global_summary
 
 
+def _parse_int(value: object) -> int | None:
+    try:
+        if value is None or pd.isna(value):
+            return None
+    except TypeError:
+        if value is None:
+            return None
+    text = str(value).strip()
+    if not text:
+        return None
+    try:
+        return int(float(text))
+    except ValueError:
+        return None
+
+
+def _fix_mojibake(text: str) -> str:
+    if "Ã" not in text and "Â" not in text:
+        return text
+    try:
+        return text.encode("latin-1").decode("utf-8")
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return text
+
+
+def compute_rq9_age_vs_efficiency(config: Config, team_summary: pd.DataFrame) -> pd.DataFrame:
+    rows: list[dict] = []
+    for season in config.seasons:
+        summary_dir = config.player_cache_dir / "_espn_match_summaries" / str(season)
+        if not summary_dir.exists():
+            print(
+                f"[warn] RQ9: Kein Match-Summary-Cache fuer Saison {season} gefunden "
+                f"({summary_dir})."
+            )
+            continue
+        for match_file in sorted(summary_dir.glob("*.json")):
+            with match_file.open("r", encoding="utf-8") as f:
+                payload = json.load(f)
+
+            competitors = payload.get("header", {}).get("competitions", [])
+            competitors = competitors[0].get("competitors", []) if competitors else []
+            goals_by_side: dict[str, int] = {}
+            for comp in competitors:
+                side = str(comp.get("homeAway") or "").strip().lower()
+                if not side:
+                    continue
+                goals = _parse_int(comp.get("score"))
+                if goals is None:
+                    continue
+                goals_by_side[side] = goals
+
+            for team_data in payload.get("boxscore", {}).get("teams", []):
+                side = str(team_data.get("homeAway") or "").strip().lower()
+                team_name = (
+                    team_data.get("team", {}).get("displayName")
+                    or team_data.get("team", {}).get("name")
+                    or ""
+                ).strip()
+                if not side or not team_name:
+                    continue
+                team_name = _fix_mojibake(team_name)
+                stats = team_data.get("statistics", [])
+                shots_raw = next(
+                    (s.get("displayValue") for s in stats if s.get("name") == "totalShots"),
+                    None,
+                )
+                shots = _parse_int(shots_raw)
+                goals = goals_by_side.get(side)
+                if shots is None or goals is None:
+                    continue
+                rows.append(
+                    {
+                        "season": str(season),
+                        "season_label": normalize_season_label(str(season)),
+                        "game_id": match_file.stem,
+                        "team": team_name,
+                        "home_away": side,
+                        "goals": goals,
+                        "shots": shots,
+                    }
+                )
+
+    if not rows:
+        return pd.DataFrame(
+            columns=[
+                "season",
+                "season_label",
+                "team",
+                "avg_age",
+                "matches",
+                "home_matches",
+                "away_matches",
+                "total_goals",
+                "total_shots",
+                "goals_per_shot",
+            ]
+        )
+
+    match_stats = pd.DataFrame.from_records(rows)
+    aggregated = (
+        match_stats.groupby(["season", "season_label", "team"], dropna=False)
+        .agg(
+            matches=("game_id", "nunique"),
+            home_matches=("home_away", lambda s: int((s == "home").sum())),
+            away_matches=("home_away", lambda s: int((s == "away").sum())),
+            total_goals=("goals", "sum"),
+            total_shots=("shots", "sum"),
+        )
+        .reset_index()
+    )
+    aggregated["goals_per_shot"] = (
+        aggregated["total_goals"] / aggregated["total_shots"].replace({0: pd.NA})
+    )
+    aggregated["season"] = aggregated["season"].astype(str)
+    team_age = team_summary[["season", "team", "avg_age"]].copy()
+    team_age["season"] = team_age["season"].astype(str)
+    rq9 = aggregated.merge(
+        team_age,
+        how="left",
+        on=["season", "team"],
+    )
+    rq9 = rq9[
+        [
+            "season",
+            "season_label",
+            "team",
+            "avg_age",
+            "matches",
+            "home_matches",
+            "away_matches",
+            "total_goals",
+            "total_shots",
+            "goals_per_shot",
+        ]
+    ]
+    rq9 = rq9.sort_values(
+        ["season", "goals_per_shot", "team"],
+        ascending=[True, False, True],
+        kind="stable",
+    )
+    return rq9
+
+
+def _fit_rq9_peak(df: pd.DataFrame, scope: str, season: str | None = None) -> dict:
+    base = {
+        "scope": scope,
+        "season": season or "all",
+        "n_teams": int(len(df)),
+        "pearson_r_age_efficiency": float("nan"),
+        "estimated_peak_age": float("nan"),
+        "estimated_peak_goals_per_shot": float("nan"),
+        "model_note": "",
+    }
+    if df.empty or len(df) < 3:
+        base["model_note"] = "Zu wenige Datenpunkte fuer Peak-Schaetzung."
+        return base
+
+    x = pd.to_numeric(df["avg_age"], errors="coerce")
+    y = pd.to_numeric(df["goals_per_shot"], errors="coerce")
+    valid = pd.DataFrame({"x": x, "y": y}).dropna()
+    if len(valid) < 3:
+        base["model_note"] = "Zu wenige gueltige Datenpunkte nach Bereinigung."
+        return base
+
+    base["pearson_r_age_efficiency"] = float(valid["x"].corr(valid["y"]))
+
+    coeff = np.polyfit(valid["x"], valid["y"], 2)
+    a, b, c = float(coeff[0]), float(coeff[1]), float(coeff[2])
+    age_min = float(valid["x"].min())
+    age_max = float(valid["x"].max())
+
+    if math.isclose(a, 0.0, abs_tol=1e-12):
+        base["model_note"] = "Quadratisches Modell nahezu linear; kein stabiles Peak-Alter."
+        return base
+    if a >= 0:
+        base["model_note"] = "Kurve nicht konkav; kein internes Maximum im beobachteten Bereich."
+        return base
+
+    peak_age = -b / (2 * a)
+    if not (age_min <= peak_age <= age_max):
+        base["model_note"] = (
+            "Maximum liegt ausserhalb des beobachteten Altersbereichs "
+            f"({age_min:.2f}-{age_max:.2f})."
+        )
+        return base
+
+    peak_eff = a * (peak_age**2) + b * peak_age + c
+    base["estimated_peak_age"] = float(peak_age)
+    base["estimated_peak_goals_per_shot"] = float(peak_eff)
+    base["model_note"] = "Quadratische Schaetzung innerhalb des beobachteten Altersbereichs."
+    return base
+
+
+def compute_rq9_optimal_age_summary(rq9_summary: pd.DataFrame) -> pd.DataFrame:
+    valid = rq9_summary.dropna(subset=["avg_age", "goals_per_shot"]).copy()
+    rows: list[dict] = []
+    rows.append(_fit_rq9_peak(valid, scope="all_seasons", season=None))
+    for season, group in valid.groupby("season", dropna=False):
+        rows.append(_fit_rq9_peak(group, scope="single_season", season=str(season)))
+    out = pd.DataFrame.from_records(rows)
+    out = out.sort_values(["scope", "season"], kind="stable").reset_index(drop=True)
+    return out
+
+
+def compute_rq9_player_age_profile(config: Config, players_df: pd.DataFrame) -> pd.DataFrame:
+    # Aggregate player-level goals/shots across matches and join with player age.
+    stats_rows: list[dict] = []
+    for season in config.seasons:
+        summary_dir = config.player_cache_dir / "_espn_match_summaries" / str(season)
+        if not summary_dir.exists():
+            continue
+        for match_file in sorted(summary_dir.glob("*.json")):
+            with match_file.open("r", encoding="utf-8") as f:
+                payload = json.load(f)
+            for team_data in payload.get("rosters", []):
+                team_name = (
+                    team_data.get("team", {}).get("displayName")
+                    or team_data.get("team", {}).get("name")
+                    or ""
+                ).strip()
+                team_name = _fix_mojibake(team_name)
+                for player_data in team_data.get("roster", []):
+                    athlete = player_data.get("athlete", {})
+                    player_id = str(athlete.get("id") or "").strip()
+                    player_name = (
+                        athlete.get("displayName") or athlete.get("fullName") or ""
+                    ).strip()
+                    if not player_id or not player_name:
+                        continue
+                    pstats = player_data.get("stats", []) or []
+                    goals = next(
+                        (_parse_int(s.get("displayValue")) for s in pstats if s.get("name") == "totalGoals"),
+                        None,
+                    )
+                    shots = next(
+                        (_parse_int(s.get("displayValue")) for s in pstats if s.get("name") == "totalShots"),
+                        None,
+                    )
+                    if goals is None or shots is None:
+                        continue
+                    stats_rows.append(
+                        {
+                            "season": str(season),
+                            "team": team_name,
+                            "player": _fix_mojibake(player_name),
+                            "player_id": player_id,
+                            "goals": goals,
+                            "shots": shots,
+                        }
+                    )
+    if not stats_rows:
+        return pd.DataFrame(
+            columns=[
+                "season",
+                "age_int",
+                "players",
+                "total_goals",
+                "total_shots",
+                "goals_per_shot",
+            ]
+        )
+
+    player_match = pd.DataFrame.from_records(stats_rows)
+    player_totals = (
+        player_match.groupby(["season", "team", "player", "player_id"], dropna=False)
+        .agg(total_goals=("goals", "sum"), total_shots=("shots", "sum"))
+        .reset_index()
+    )
+    player_totals["player_id"] = player_totals["player_id"].astype(str)
+
+    age_lookup = players_df[["season", "team", "player", "player_id", "age_ref"]].copy()
+    age_lookup["season"] = age_lookup["season"].astype(str)
+    age_lookup["player_id"] = age_lookup["player_id"].astype(str)
+    age_lookup = age_lookup.drop_duplicates(
+        subset=["season", "team", "player", "player_id"], keep="first"
+    )
+
+    merged = player_totals.merge(
+        age_lookup,
+        how="left",
+        on=["season", "team", "player", "player_id"],
+    )
+    merged["age_int"] = pd.to_numeric(merged["age_ref"], errors="coerce").round().astype("Int64")
+    merged = merged.dropna(subset=["age_int"])
+    merged = merged[merged["total_shots"] > 0].copy()
+
+    by_age = (
+        merged.groupby(["season", "age_int"], dropna=False)
+        .agg(
+            players=("player_id", "nunique"),
+            total_goals=("total_goals", "sum"),
+            total_shots=("total_shots", "sum"),
+        )
+        .reset_index()
+    )
+    by_age["goals_per_shot"] = by_age["total_goals"] / by_age["total_shots"]
+    by_age = by_age.sort_values(
+        ["season", "goals_per_shot", "age_int"], ascending=[True, False, True], kind="stable"
+    )
+    return by_age
+
+
+def compute_rq9_player_best_age(player_age_profile: pd.DataFrame, min_total_shots: int = 80) -> pd.DataFrame:
+    if player_age_profile.empty:
+        return pd.DataFrame(
+            columns=[
+                "season",
+                "min_total_shots",
+                "best_age_int",
+                "goals_per_shot",
+                "total_shots",
+                "total_goals",
+                "players",
+            ]
+        )
+    eligible = player_age_profile[
+        pd.to_numeric(player_age_profile["total_shots"], errors="coerce") >= int(min_total_shots)
+    ].copy()
+    if eligible.empty:
+        return pd.DataFrame(
+            [
+                {
+                    "season": "all",
+                    "min_total_shots": int(min_total_shots),
+                    "best_age_int": pd.NA,
+                    "goals_per_shot": pd.NA,
+                    "total_shots": pd.NA,
+                    "total_goals": pd.NA,
+                    "players": pd.NA,
+                }
+            ]
+        )
+
+    out_rows: list[dict] = []
+    for season, group in eligible.groupby("season", dropna=False):
+        best = group.sort_values(
+            ["goals_per_shot", "total_shots", "players"],
+            ascending=[False, False, False],
+            kind="stable",
+        ).iloc[0]
+        out_rows.append(
+            {
+                "season": season,
+                "min_total_shots": int(min_total_shots),
+                "best_age_int": int(best["age_int"]),
+                "goals_per_shot": float(best["goals_per_shot"]),
+                "total_shots": int(best["total_shots"]),
+                "total_goals": int(best["total_goals"]),
+                "players": int(best["players"]),
+            }
+        )
+
+    all_group = (
+        eligible.groupby("age_int", dropna=False)
+        .agg(
+            players=("players", "sum"),
+            total_goals=("total_goals", "sum"),
+            total_shots=("total_shots", "sum"),
+        )
+        .reset_index()
+    )
+    all_group["goals_per_shot"] = all_group["total_goals"] / all_group["total_shots"]
+    best_all = all_group.sort_values(
+        ["goals_per_shot", "total_shots", "players"],
+        ascending=[False, False, False],
+        kind="stable",
+    ).iloc[0]
+    out_rows.append(
+        {
+            "season": "all",
+            "min_total_shots": int(min_total_shots),
+            "best_age_int": int(best_all["age_int"]),
+            "goals_per_shot": float(best_all["goals_per_shot"]),
+            "total_shots": int(best_all["total_shots"]),
+            "total_goals": int(best_all["total_goals"]),
+            "players": int(best_all["players"]),
+        }
+    )
+
+    return pd.DataFrame.from_records(out_rows).sort_values(["season"], kind="stable")
+
+
 def save_outputs(
     player_table: pd.DataFrame,
     team_summary: pd.DataFrame,
     season_summary: pd.DataFrame,
     global_summary: pd.DataFrame,
+    rq9_summary: pd.DataFrame,
+    rq9_peak_summary: pd.DataFrame,
+    rq9_player_age_profile: pd.DataFrame,
+    rq9_player_best_age: pd.DataFrame,
     output_dir: Path,
 ) -> None:
     player_table.to_csv(output_dir / "bundesliga_team_player_ages.csv", index=False)
     team_summary.to_csv(output_dir / "bundesliga_team_age_summary.csv", index=False)
     season_summary.to_csv(output_dir / "bundesliga_season_age_summary.csv", index=False)
     global_summary.to_csv(output_dir / "bundesliga_global_age_summary.csv", index=False)
+    rq9_summary.to_csv(output_dir / "bundesliga_rq9_age_vs_efficiency.csv", index=False)
+    rq9_peak_summary.to_csv(
+        output_dir / "bundesliga_rq9_optimal_age_summary.csv", index=False
+    )
+    rq9_player_age_profile.to_csv(
+        output_dir / "bundesliga_rq9_player_age_profile.csv", index=False
+    )
+    rq9_player_best_age.to_csv(
+        output_dir / "bundesliga_rq9_player_best_age.csv", index=False
+    )
 
 
 def print_report(
@@ -691,6 +1089,10 @@ def print_report(
     team_summary: pd.DataFrame,
     season_summary: pd.DataFrame,
     global_summary: pd.DataFrame,
+    rq9_summary: pd.DataFrame,
+    rq9_peak_summary: pd.DataFrame,
+    rq9_player_age_profile: pd.DataFrame,
+    rq9_player_best_age: pd.DataFrame,
 ) -> None:
     pd.set_option("display.max_rows", 500)
     pd.set_option("display.width", 200)
@@ -721,6 +1123,38 @@ def print_report(
     for col in ("avg_age", "min_age", "max_age"):
         global_display[col] = global_display[col].round(2)
     print(global_display.to_string(index=False))
+
+    print("\n=== RQ9: TEAMALTER VS EFFIZIENZ (TORE PRO SCHUSS) ===")
+    rq9_display = rq9_summary.copy()
+    for col in ("avg_age", "goals_per_shot"):
+        rq9_display[col] = pd.to_numeric(rq9_display[col], errors="coerce").round(3)
+    print(rq9_display.to_string(index=False))
+
+    print("\n=== RQ9: GESCHAETZTES 'BESTES' ALTER ===")
+    peak_display = rq9_peak_summary.copy()
+    for col in (
+        "pearson_r_age_efficiency",
+        "estimated_peak_age",
+        "estimated_peak_goals_per_shot",
+    ):
+        peak_display[col] = pd.to_numeric(peak_display[col], errors="coerce").round(3)
+    print(peak_display.to_string(index=False))
+
+    print("\n=== RQ9: SPIELER-ALTERSPROFIL (TORE PRO SCHUSS) ===")
+    profile_display = rq9_player_age_profile.copy()
+    if not profile_display.empty:
+        profile_display["goals_per_shot"] = (
+            pd.to_numeric(profile_display["goals_per_shot"], errors="coerce").round(3)
+        )
+    print(profile_display.to_string(index=False))
+
+    print("\n=== RQ9: 'BESTES' SPIELERALTER (NACH ALTERSGRUPPE) ===")
+    best_display = rq9_player_best_age.copy()
+    if not best_display.empty:
+        best_display["goals_per_shot"] = (
+            pd.to_numeric(best_display["goals_per_shot"], errors="coerce").round(3)
+        )
+    print(best_display.to_string(index=False))
 
 
 def build_config(args: argparse.Namespace) -> Config:
@@ -779,15 +1213,34 @@ def main(argv: Iterable[str] | None = None) -> int:
     player_table = compute_team_player_table(players_df)
     team_summary = compute_team_summary(players_df)
     season_summary, global_summary = compute_season_and_global_summary(players_df)
+    rq9_summary = compute_rq9_age_vs_efficiency(config, team_summary)
+    rq9_peak_summary = compute_rq9_optimal_age_summary(rq9_summary)
+    rq9_player_age_profile = compute_rq9_player_age_profile(config, players_df)
+    rq9_player_best_age = compute_rq9_player_best_age(
+        rq9_player_age_profile, min_total_shots=80
+    )
 
     save_outputs(
         player_table=player_table,
         team_summary=team_summary,
         season_summary=season_summary,
         global_summary=global_summary,
+        rq9_summary=rq9_summary,
+        rq9_peak_summary=rq9_peak_summary,
+        rq9_player_age_profile=rq9_player_age_profile,
+        rq9_player_best_age=rq9_player_best_age,
         output_dir=config.output_dir,
     )
-    print_report(player_table, team_summary, season_summary, global_summary)
+    print_report(
+        player_table,
+        team_summary,
+        season_summary,
+        global_summary,
+        rq9_summary,
+        rq9_peak_summary,
+        rq9_player_age_profile,
+        rq9_player_best_age,
+    )
 
     print("\n[ok] CSV-Ausgaben gespeichert in:", config.output_dir.resolve())
     print("[ok] Saison-Player-Caches in:", config.player_cache_dir.resolve())
