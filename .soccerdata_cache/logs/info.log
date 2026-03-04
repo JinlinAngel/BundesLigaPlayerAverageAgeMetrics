@@ -2377,3 +2377,93 @@ INFO 2026-03-04 01:09:59,446 [whoscored.py:read_events:688]
 INFO 2026-03-04 01:10:10,708 [whoscored.py:read_events:688]
 [306/306] Retrieving game with id=1834463
 
+INFO 2026-03-04 21:22:42,749 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-04 21:22:42,754 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-04 21:28:07,635 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-04 21:28:07,642 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-04 21:29:02,788 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-04 21:29:02,794 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-04 21:30:53,938 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-04 21:30:53,943 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-04 21:31:28,180 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-04 21:31:28,185 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-04 21:36:52,285 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-04 21:36:52,290 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-04 21:37:42,169 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-04 21:37:42,174 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-04 21:38:55,055 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-04 21:38:55,060 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-04 21:38:55,078 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-04 21:38:55,087 [libraries.py:_load_library:397]
+Successfully loaded TLS library: C:\Users\finnb\AppData\Roaming\Python\Python313\site-packages\tls_requests\bin\tls-client-xgo-1.13.1-windows-amd64.dll
+
+INFO 2026-03-04 21:54:06,594 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\WhoScored
+
+INFO 2026-03-04 21:54:12,125 [whoscored.py:read_schedule:365]
+Retrieving calendar for GER-Bundesliga 2425
+
+INFO 2026-03-04 21:54:12,134 [whoscored.py:read_schedule:396]
+[1/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-04 21:54:12,161 [whoscored.py:read_schedule:396]
+[2/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-04 21:54:12,186 [whoscored.py:read_schedule:396]
+[3/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-04 21:54:12,201 [whoscored.py:read_schedule:396]
+[4/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-04 21:54:12,210 [whoscored.py:read_schedule:396]
+[5/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-04 21:54:12,219 [whoscored.py:read_schedule:396]
+[6/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-04 21:54:12,227 [whoscored.py:read_schedule:396]
+[7/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-04 21:54:12,234 [whoscored.py:read_schedule:396]
+[8/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-04 21:54:12,242 [whoscored.py:read_schedule:396]
+[9/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-04 21:54:12,251 [whoscored.py:read_schedule:396]
+[10/10] Retrieving fixtures for GER-Bundesliga 2425
+
