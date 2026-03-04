@@ -1753,3 +1753,627 @@ INFO 2026-03-04 00:23:24,038 [whoscored.py:read_events:688]
 INFO 2026-03-04 00:23:37,417 [whoscored.py:read_events:688]
 [98/306] Retrieving game with id=1834344
 
+INFO 2026-03-04 00:23:49,155 [whoscored.py:read_events:688]
+[99/306] Retrieving game with id=1834345
+
+INFO 2026-03-04 00:24:00,937 [whoscored.py:read_events:688]
+[100/306] Retrieving game with id=1834354
+
+INFO 2026-03-04 00:24:14,674 [whoscored.py:read_events:688]
+[101/306] Retrieving game with id=1834351
+
+INFO 2026-03-04 00:24:27,470 [whoscored.py:read_events:688]
+[102/306] Retrieving game with id=1834347
+
+INFO 2026-03-04 00:24:40,821 [whoscored.py:read_events:688]
+[103/306] Retrieving game with id=1834350
+
+INFO 2026-03-04 00:24:55,658 [whoscored.py:read_events:688]
+[104/306] Retrieving game with id=1834346
+
+INFO 2026-03-04 00:25:08,964 [whoscored.py:read_events:688]
+[105/306] Retrieving game with id=1834353
+
+INFO 2026-03-04 00:25:22,610 [whoscored.py:read_events:688]
+[106/306] Retrieving game with id=1834349
+
+INFO 2026-03-04 00:25:33,693 [whoscored.py:read_events:688]
+[107/306] Retrieving game with id=1834348
+
+INFO 2026-03-04 00:25:47,757 [whoscored.py:read_events:688]
+[108/306] Retrieving game with id=1834352
+
+INFO 2026-03-04 00:26:00,761 [whoscored.py:read_events:688]
+[109/306] Retrieving game with id=1834356
+
+INFO 2026-03-04 00:26:15,212 [whoscored.py:read_events:688]
+[110/306] Retrieving game with id=1834355
+
+INFO 2026-03-04 00:26:26,459 [whoscored.py:read_events:688]
+[111/306] Retrieving game with id=1834550
+
+INFO 2026-03-04 00:26:37,463 [whoscored.py:read_events:688]
+[112/306] Retrieving game with id=1834494
+
+INFO 2026-03-04 00:26:52,575 [whoscored.py:read_events:688]
+[113/306] Retrieving game with id=1834492
+
+INFO 2026-03-04 00:27:04,790 [whoscored.py:read_events:688]
+[114/306] Retrieving game with id=1834552
+
+INFO 2026-03-04 00:27:20,287 [whoscored.py:read_events:688]
+[115/306] Retrieving game with id=1834496
+
+INFO 2026-03-04 00:27:34,749 [whoscored.py:read_events:688]
+[116/306] Retrieving game with id=1834488
+
+INFO 2026-03-04 00:27:45,822 [whoscored.py:read_events:688]
+[117/306] Retrieving game with id=1834490
+
+INFO 2026-03-04 00:28:01,500 [whoscored.py:read_events:688]
+[118/306] Retrieving game with id=1834504
+
+INFO 2026-03-04 00:28:15,353 [whoscored.py:read_events:688]
+[119/306] Retrieving game with id=1834506
+
+INFO 2026-03-04 00:28:29,969 [whoscored.py:read_events:688]
+[120/306] Retrieving game with id=1834509
+
+INFO 2026-03-04 00:28:41,193 [whoscored.py:read_events:688]
+[121/306] Retrieving game with id=1834507
+
+INFO 2026-03-04 00:28:52,168 [whoscored.py:read_events:688]
+[122/306] Retrieving game with id=1834513
+
+INFO 2026-03-04 00:29:04,573 [whoscored.py:read_events:688]
+[123/306] Retrieving game with id=1834511
+
+INFO 2026-03-04 00:29:19,246 [whoscored.py:read_events:688]
+[124/306] Retrieving game with id=1834500
+
+INFO 2026-03-04 00:29:31,844 [whoscored.py:read_events:688]
+[125/306] Retrieving game with id=1834502
+
+INFO 2026-03-04 00:29:44,428 [whoscored.py:read_events:688]
+[126/306] Retrieving game with id=1834498
+
+INFO 2026-03-04 00:29:57,172 [whoscored.py:read_events:688]
+[127/306] Retrieving game with id=1834518
+
+INFO 2026-03-04 00:30:08,952 [whoscored.py:read_events:688]
+[128/306] Retrieving game with id=1834515
+
+INFO 2026-03-04 00:30:23,427 [whoscored.py:read_events:688]
+[129/306] Retrieving game with id=1834519
+
+INFO 2026-03-04 00:30:35,465 [whoscored.py:read_events:688]
+[130/306] Retrieving game with id=1834521
+
+INFO 2026-03-04 00:30:50,192 [whoscored.py:read_events:688]
+[131/306] Retrieving game with id=1834529
+
+INFO 2026-03-04 00:31:02,639 [whoscored.py:read_events:688]
+[132/306] Retrieving game with id=1834516
+
+INFO 2026-03-04 00:31:15,416 [whoscored.py:read_events:688]
+[133/306] Retrieving game with id=1834523
+
+INFO 2026-03-04 00:31:31,282 [whoscored.py:read_events:688]
+[134/306] Retrieving game with id=1834527
+
+INFO 2026-03-04 00:31:43,463 [whoscored.py:read_events:688]
+[135/306] Retrieving game with id=1834525
+
+INFO 2026-03-04 00:31:58,659 [whoscored.py:read_events:688]
+[136/306] Retrieving game with id=1834533
+
+INFO 2026-03-04 00:32:14,197 [whoscored.py:read_events:688]
+[137/306] Retrieving game with id=1834545
+
+INFO 2026-03-04 00:32:27,131 [whoscored.py:read_events:688]
+[138/306] Retrieving game with id=1834537
+
+INFO 2026-03-04 00:32:38,253 [whoscored.py:read_events:688]
+[139/306] Retrieving game with id=1834539
+
+INFO 2026-03-04 00:32:52,527 [whoscored.py:read_events:688]
+[140/306] Retrieving game with id=1834535
+
+INFO 2026-03-04 00:33:07,295 [whoscored.py:read_events:688]
+[141/306] Retrieving game with id=1834543
+
+INFO 2026-03-04 00:33:18,567 [whoscored.py:read_events:688]
+[142/306] Retrieving game with id=1834547
+
+INFO 2026-03-04 00:33:31,619 [whoscored.py:read_events:688]
+[143/306] Retrieving game with id=1834541
+
+INFO 2026-03-04 00:33:43,471 [whoscored.py:read_events:688]
+[144/306] Retrieving game with id=1834531
+
+INFO 2026-03-04 00:33:58,522 [whoscored.py:read_events:688]
+[145/306] Retrieving game with id=1834487
+
+INFO 2026-03-04 00:34:09,441 [whoscored.py:read_events:688]
+[146/306] Retrieving game with id=1834493
+
+INFO 2026-03-04 00:34:21,715 [whoscored.py:read_events:688]
+[147/306] Retrieving game with id=1834503
+
+INFO 2026-03-04 00:34:34,414 [whoscored.py:read_events:688]
+[148/306] Retrieving game with id=1834497
+
+INFO 2026-03-04 00:34:49,811 [whoscored.py:read_events:688]
+[149/306] Retrieving game with id=1834491
+
+INFO 2026-03-04 00:35:02,136 [whoscored.py:read_events:688]
+[150/306] Retrieving game with id=1834501
+
+INFO 2026-03-04 00:35:16,967 [whoscored.py:read_events:688]
+[151/306] Retrieving game with id=1834499
+
+INFO 2026-03-04 00:35:28,286 [whoscored.py:read_events:688]
+[152/306] Retrieving game with id=1834489
+
+INFO 2026-03-04 00:35:44,151 [whoscored.py:read_events:688]
+[153/306] Retrieving game with id=1834495
+
+INFO 2026-03-04 00:35:58,571 [whoscored.py:read_events:688]
+[154/306] Retrieving game with id=1834512
+
+INFO 2026-03-04 00:36:13,790 [whoscored.py:read_events:688]
+[155/306] Retrieving game with id=1834505
+
+INFO 2026-03-04 00:36:27,791 [whoscored.py:read_events:688]
+[156/306] Retrieving game with id=1834510
+
+INFO 2026-03-04 00:36:41,546 [whoscored.py:read_events:688]
+[157/306] Retrieving game with id=1834522
+
+INFO 2026-03-04 00:36:56,625 [whoscored.py:read_events:688]
+[158/306] Retrieving game with id=1834514
+
+INFO 2026-03-04 00:37:12,246 [whoscored.py:read_events:688]
+[159/306] Retrieving game with id=1834524
+
+INFO 2026-03-04 00:37:24,295 [whoscored.py:read_events:688]
+[160/306] Retrieving game with id=1834508
+
+INFO 2026-03-04 00:37:38,077 [whoscored.py:read_events:688]
+[161/306] Retrieving game with id=1834520
+
+INFO 2026-03-04 00:37:53,901 [whoscored.py:read_events:688]
+[162/306] Retrieving game with id=1834517
+
+INFO 2026-03-04 00:38:05,027 [whoscored.py:read_events:688]
+[163/306] Retrieving game with id=1834536
+
+INFO 2026-03-04 00:38:17,774 [whoscored.py:read_events:688]
+[164/306] Retrieving game with id=1834534
+
+INFO 2026-03-04 00:38:34,592 [whoscored.py:read_events:688]
+[165/306] Retrieving game with id=1834528
+
+INFO 2026-03-04 00:38:45,695 [whoscored.py:read_events:688]
+[166/306] Retrieving game with id=1834540
+
+INFO 2026-03-04 00:38:57,551 [whoscored.py:read_events:688]
+[167/306] Retrieving game with id=1834532
+
+INFO 2026-03-04 00:39:10,798 [whoscored.py:read_events:688]
+[168/306] Retrieving game with id=1834538
+
+INFO 2026-03-04 00:39:23,558 [whoscored.py:read_events:688]
+[169/306] Retrieving game with id=1834526
+
+INFO 2026-03-04 00:39:37,784 [whoscored.py:read_events:688]
+[170/306] Retrieving game with id=1834530
+
+INFO 2026-03-04 00:39:52,362 [whoscored.py:read_events:688]
+[171/306] Retrieving game with id=1834542
+
+INFO 2026-03-04 00:40:05,141 [whoscored.py:read_events:688]
+[172/306] Retrieving game with id=1834358
+
+INFO 2026-03-04 00:40:20,785 [whoscored.py:read_events:688]
+[173/306] Retrieving game with id=1834548
+
+INFO 2026-03-04 00:40:36,074 [whoscored.py:read_events:688]
+[174/306] Retrieving game with id=1834364
+
+INFO 2026-03-04 00:40:50,827 [whoscored.py:read_events:688]
+[175/306] Retrieving game with id=1834551
+
+INFO 2026-03-04 00:41:05,126 [whoscored.py:read_events:688]
+[176/306] Retrieving game with id=1834367
+
+INFO 2026-03-04 00:41:17,073 [whoscored.py:read_events:688]
+[177/306] Retrieving game with id=1834361
+
+INFO 2026-03-04 00:41:32,321 [whoscored.py:read_events:688]
+[178/306] Retrieving game with id=1834546
+
+INFO 2026-03-04 00:41:48,118 [whoscored.py:read_events:688]
+[179/306] Retrieving game with id=1834544
+
+INFO 2026-03-04 00:42:00,125 [whoscored.py:read_events:688]
+[180/306] Retrieving game with id=1834549
+
+INFO 2026-03-04 00:42:15,276 [whoscored.py:read_events:688]
+[181/306] Retrieving game with id=1834370
+
+INFO 2026-03-04 00:42:26,997 [whoscored.py:read_events:688]
+[182/306] Retrieving game with id=1834376
+
+INFO 2026-03-04 00:42:38,972 [whoscored.py:read_events:688]
+[183/306] Retrieving game with id=1834389
+
+INFO 2026-03-04 00:42:52,544 [whoscored.py:read_events:688]
+[184/306] Retrieving game with id=1834382
+
+INFO 2026-03-04 00:43:07,532 [whoscored.py:read_events:688]
+[185/306] Retrieving game with id=1834380
+
+INFO 2026-03-04 00:43:21,146 [whoscored.py:read_events:688]
+[186/306] Retrieving game with id=1834387
+
+INFO 2026-03-04 00:43:34,182 [whoscored.py:read_events:688]
+[187/306] Retrieving game with id=1834385
+
+INFO 2026-03-04 00:43:46,666 [whoscored.py:read_events:688]
+[188/306] Retrieving game with id=1834391
+
+INFO 2026-03-04 00:43:57,659 [whoscored.py:read_events:688]
+[189/306] Retrieving game with id=1834373
+
+INFO 2026-03-04 00:44:12,883 [whoscored.py:read_events:688]
+[190/306] Retrieving game with id=1834408
+
+INFO 2026-03-04 00:44:28,107 [whoscored.py:read_events:688]
+[191/306] Retrieving game with id=1834392
+
+INFO 2026-03-04 00:44:42,215 [whoscored.py:read_events:688]
+[192/306] Retrieving game with id=1834413
+
+INFO 2026-03-04 00:44:57,581 [whoscored.py:read_events:688]
+[193/306] Retrieving game with id=1834415
+
+INFO 2026-03-04 00:45:09,065 [whoscored.py:read_events:688]
+[194/306] Retrieving game with id=1834410
+
+INFO 2026-03-04 00:45:22,557 [whoscored.py:read_events:688]
+[195/306] Retrieving game with id=1834394
+
+INFO 2026-03-04 00:45:37,575 [whoscored.py:read_events:688]
+[196/306] Retrieving game with id=1834396
+
+INFO 2026-03-04 00:45:52,457 [whoscored.py:read_events:688]
+[197/306] Retrieving game with id=1834398
+
+INFO 2026-03-04 00:46:03,636 [whoscored.py:read_events:688]
+[198/306] Retrieving game with id=1834405
+
+INFO 2026-03-04 00:46:15,539 [whoscored.py:read_events:688]
+[199/306] Retrieving game with id=1834431
+
+INFO 2026-03-04 00:46:30,481 [whoscored.py:read_events:688]
+[200/306] Retrieving game with id=1834426
+
+INFO 2026-03-04 00:46:42,828 [whoscored.py:read_events:688]
+[201/306] Retrieving game with id=1834440
+
+INFO 2026-03-04 00:46:56,659 [whoscored.py:read_events:688]
+[202/306] Retrieving game with id=1834359
+
+INFO 2026-03-04 00:47:08,734 [whoscored.py:read_events:688]
+[203/306] Retrieving game with id=1834437
+
+INFO 2026-03-04 00:47:20,643 [whoscored.py:read_events:688]
+[204/306] Retrieving game with id=1834434
+
+INFO 2026-03-04 00:47:32,182 [whoscored.py:read_events:688]
+[205/306] Retrieving game with id=1834419
+
+INFO 2026-03-04 00:47:43,220 [whoscored.py:read_events:688]
+[206/306] Retrieving game with id=1834428
+
+INFO 2026-03-04 00:47:55,745 [whoscored.py:read_events:688]
+[207/306] Retrieving game with id=1834423
+
+INFO 2026-03-04 00:48:09,566 [whoscored.py:read_events:688]
+[208/306] Retrieving game with id=1834362
+
+INFO 2026-03-04 00:48:24,321 [whoscored.py:read_events:688]
+[209/306] Retrieving game with id=1834383
+
+INFO 2026-03-04 00:48:35,198 [whoscored.py:read_events:688]
+[210/306] Retrieving game with id=1834368
+
+INFO 2026-03-04 00:48:50,234 [whoscored.py:read_events:688]
+[211/306] Retrieving game with id=1834371
+
+INFO 2026-03-04 00:49:01,602 [whoscored.py:read_events:688]
+[212/306] Retrieving game with id=1834365
+
+INFO 2026-03-04 00:49:16,448 [whoscored.py:read_events:688]
+[213/306] Retrieving game with id=1834386
+
+INFO 2026-03-04 00:49:29,664 [whoscored.py:read_events:688]
+[214/306] Retrieving game with id=1834374
+
+INFO 2026-03-04 00:49:56,837 [whoscored.py:read_events:688]
+[215/306] Retrieving game with id=1834377
+
+INFO 2026-03-04 00:50:10,288 [whoscored.py:read_events:688]
+[216/306] Retrieving game with id=1834379
+
+INFO 2026-03-04 00:50:23,138 [whoscored.py:read_events:688]
+[217/306] Retrieving game with id=1834406
+
+INFO 2026-03-04 00:50:35,901 [whoscored.py:read_events:688]
+[218/306] Retrieving game with id=1834390
+
+INFO 2026-03-04 00:50:47,108 [whoscored.py:read_events:688]
+[219/306] Retrieving game with id=1834395
+
+INFO 2026-03-04 00:51:01,394 [whoscored.py:read_events:688]
+[220/306] Retrieving game with id=1834399
+
+INFO 2026-03-04 00:51:17,050 [whoscored.py:read_events:688]
+[221/306] Retrieving game with id=1834403
+
+INFO 2026-03-04 00:51:29,473 [whoscored.py:read_events:688]
+[222/306] Retrieving game with id=1834407
+
+INFO 2026-03-04 00:51:41,352 [whoscored.py:read_events:688]
+[223/306] Retrieving game with id=1834404
+
+INFO 2026-03-04 00:51:53,707 [whoscored.py:read_events:688]
+[224/306] Retrieving game with id=1834400
+
+INFO 2026-03-04 00:52:08,010 [whoscored.py:read_events:688]
+[225/306] Retrieving game with id=1834401
+
+INFO 2026-03-04 00:52:23,567 [whoscored.py:read_events:688]
+[226/306] Retrieving game with id=1834357
+
+INFO 2026-03-04 00:52:35,820 [whoscored.py:read_events:688]
+[227/306] Retrieving game with id=1834420
+
+INFO 2026-03-04 00:52:48,311 [whoscored.py:read_events:688]
+[228/306] Retrieving game with id=1834422
+
+INFO 2026-03-04 00:53:00,036 [whoscored.py:read_events:688]
+[229/306] Retrieving game with id=1834412
+
+INFO 2026-03-04 00:53:13,530 [whoscored.py:read_events:688]
+[230/306] Retrieving game with id=1834424
+
+INFO 2026-03-04 00:53:27,411 [whoscored.py:read_events:688]
+[231/306] Retrieving game with id=1834417
+
+INFO 2026-03-04 00:53:40,997 [whoscored.py:read_events:688]
+[232/306] Retrieving game with id=1834429
+
+INFO 2026-03-04 00:53:53,418 [whoscored.py:read_events:688]
+[233/306] Retrieving game with id=1834414
+
+INFO 2026-03-04 00:54:09,193 [whoscored.py:read_events:688]
+[234/306] Retrieving game with id=1834409
+
+INFO 2026-03-04 00:54:20,269 [whoscored.py:read_events:688]
+[235/306] Retrieving game with id=1834360
+
+INFO 2026-03-04 00:54:35,258 [whoscored.py:read_events:688]
+[236/306] Retrieving game with id=1834363
+
+INFO 2026-03-04 00:54:50,810 [whoscored.py:read_events:688]
+[237/306] Retrieving game with id=1834381
+
+INFO 2026-03-04 00:55:02,495 [whoscored.py:read_events:688]
+[238/306] Retrieving game with id=1834369
+
+INFO 2026-03-04 00:55:16,075 [whoscored.py:read_events:688]
+[239/306] Retrieving game with id=1834372
+
+INFO 2026-03-04 00:55:27,280 [whoscored.py:read_events:688]
+[240/306] Retrieving game with id=1834384
+
+INFO 2026-03-04 00:55:40,135 [whoscored.py:read_events:688]
+[241/306] Retrieving game with id=1834378
+
+INFO 2026-03-04 00:55:54,966 [whoscored.py:read_events:688]
+[242/306] Retrieving game with id=1834366
+
+INFO 2026-03-04 00:56:07,063 [whoscored.py:read_events:688]
+[243/306] Retrieving game with id=1834375
+
+INFO 2026-03-04 00:56:19,955 [whoscored.py:read_events:688]
+[244/306] Retrieving game with id=1834411
+
+INFO 2026-03-04 00:56:31,362 [whoscored.py:read_events:688]
+[245/306] Retrieving game with id=1834421
+
+INFO 2026-03-04 00:56:44,788 [whoscored.py:read_events:688]
+[246/306] Retrieving game with id=1834393
+
+INFO 2026-03-04 00:56:56,257 [whoscored.py:read_events:688]
+[247/306] Retrieving game with id=1834402
+
+INFO 2026-03-04 00:57:08,583 [whoscored.py:read_events:688]
+[248/306] Retrieving game with id=1834416
+
+INFO 2026-03-04 00:57:24,240 [whoscored.py:read_events:688]
+[249/306] Retrieving game with id=1834388
+
+INFO 2026-03-04 00:57:37,560 [whoscored.py:read_events:688]
+[250/306] Retrieving game with id=1834397
+
+INFO 2026-03-04 00:57:52,139 [whoscored.py:read_events:688]
+[251/306] Retrieving game with id=1834425
+
+INFO 2026-03-04 00:58:07,662 [whoscored.py:read_events:688]
+[252/306] Retrieving game with id=1834418
+
+INFO 2026-03-04 00:58:21,991 [whoscored.py:read_events:688]
+[253/306] Retrieving game with id=1834442
+
+INFO 2026-03-04 00:58:36,944 [whoscored.py:read_events:688]
+[254/306] Retrieving game with id=1834427
+
+INFO 2026-03-04 00:58:49,964 [whoscored.py:read_events:688]
+[255/306] Retrieving game with id=1834433
+
+INFO 2026-03-04 00:59:04,964 [whoscored.py:read_events:688]
+[256/306] Retrieving game with id=1834446
+
+INFO 2026-03-04 00:59:17,123 [whoscored.py:read_events:688]
+[257/306] Retrieving game with id=1834444
+
+INFO 2026-03-04 00:59:30,104 [whoscored.py:read_events:688]
+[258/306] Retrieving game with id=1834439
+
+INFO 2026-03-04 00:59:42,277 [whoscored.py:read_events:688]
+[259/306] Retrieving game with id=1834448
+
+INFO 2026-03-04 00:59:57,810 [whoscored.py:read_events:688]
+[260/306] Retrieving game with id=1834436
+
+INFO 2026-03-04 01:00:12,945 [whoscored.py:read_events:688]
+[261/306] Retrieving game with id=1834430
+
+INFO 2026-03-04 01:00:26,402 [whoscored.py:read_events:688]
+[262/306] Retrieving game with id=1834454
+
+INFO 2026-03-04 01:00:40,579 [whoscored.py:read_events:688]
+[263/306] Retrieving game with id=1834458
+
+INFO 2026-03-04 01:00:55,392 [whoscored.py:read_events:688]
+[264/306] Retrieving game with id=1834462
+
+INFO 2026-03-04 01:01:08,987 [whoscored.py:read_events:688]
+[265/306] Retrieving game with id=1834450
+
+INFO 2026-03-04 01:01:23,277 [whoscored.py:read_events:688]
+[266/306] Retrieving game with id=1834464
+
+INFO 2026-03-04 01:01:35,891 [whoscored.py:read_events:688]
+[267/306] Retrieving game with id=1834456
+
+INFO 2026-03-04 01:01:47,375 [whoscored.py:read_events:688]
+[268/306] Retrieving game with id=1834460
+
+INFO 2026-03-04 01:01:59,950 [whoscored.py:read_events:688]
+[269/306] Retrieving game with id=1834452
+
+INFO 2026-03-04 01:02:14,332 [whoscored.py:read_events:688]
+[270/306] Retrieving game with id=1834465
+
+INFO 2026-03-04 01:02:28,531 [whoscored.py:read_events:688]
+[271/306] Retrieving game with id=1834467
+
+INFO 2026-03-04 01:02:44,063 [whoscored.py:read_events:688]
+[272/306] Retrieving game with id=1834466
+
+INFO 2026-03-04 01:02:57,911 [whoscored.py:read_events:688]
+[273/306] Retrieving game with id=1834468
+
+INFO 2026-03-04 01:03:12,964 [whoscored.py:read_events:688]
+[274/306] Retrieving game with id=1834469
+
+INFO 2026-03-04 01:03:27,950 [whoscored.py:read_events:688]
+[275/306] Retrieving game with id=1834470
+
+INFO 2026-03-04 01:03:39,346 [whoscored.py:read_events:688]
+[276/306] Retrieving game with id=1834474
+
+INFO 2026-03-04 01:03:51,386 [whoscored.py:read_events:688]
+[277/306] Retrieving game with id=1834472
+
+INFO 2026-03-04 01:04:04,332 [whoscored.py:read_events:688]
+[278/306] Retrieving game with id=1834473
+
+INFO 2026-03-04 01:04:18,241 [whoscored.py:read_events:688]
+[279/306] Retrieving game with id=1834471
+
+INFO 2026-03-04 01:04:31,540 [whoscored.py:read_events:688]
+[280/306] Retrieving game with id=1834477
+
+INFO 2026-03-04 01:04:45,351 [whoscored.py:read_events:688]
+[281/306] Retrieving game with id=1834476
+
+INFO 2026-03-04 01:04:58,100 [whoscored.py:read_events:688]
+[282/306] Retrieving game with id=1834481
+
+INFO 2026-03-04 01:05:13,894 [whoscored.py:read_events:688]
+[283/306] Retrieving game with id=1834475
+
+INFO 2026-03-04 01:05:26,466 [whoscored.py:read_events:688]
+[284/306] Retrieving game with id=1834483
+
+INFO 2026-03-04 01:05:37,624 [whoscored.py:read_events:688]
+[285/306] Retrieving game with id=1834482
+
+INFO 2026-03-04 01:05:49,491 [whoscored.py:read_events:688]
+[286/306] Retrieving game with id=1834479
+
+INFO 2026-03-04 01:06:02,752 [whoscored.py:read_events:688]
+[287/306] Retrieving game with id=1834478
+
+INFO 2026-03-04 01:06:17,271 [whoscored.py:read_events:688]
+[288/306] Retrieving game with id=1834480
+
+INFO 2026-03-04 01:06:29,162 [whoscored.py:read_events:688]
+[289/306] Retrieving game with id=1834438
+
+INFO 2026-03-04 01:06:44,369 [whoscored.py:read_events:688]
+[290/306] Retrieving game with id=1834486
+
+INFO 2026-03-04 01:06:56,335 [whoscored.py:read_events:688]
+[291/306] Retrieving game with id=1834443
+
+INFO 2026-03-04 01:07:09,045 [whoscored.py:read_events:688]
+[292/306] Retrieving game with id=1834445
+
+INFO 2026-03-04 01:07:20,695 [whoscored.py:read_events:688]
+[293/306] Retrieving game with id=1834441
+
+INFO 2026-03-04 01:07:35,758 [whoscored.py:read_events:688]
+[294/306] Retrieving game with id=1834435
+
+INFO 2026-03-04 01:07:49,427 [whoscored.py:read_events:688]
+[295/306] Retrieving game with id=1834484
+
+INFO 2026-03-04 01:08:03,044 [whoscored.py:read_events:688]
+[296/306] Retrieving game with id=1834432
+
+INFO 2026-03-04 01:08:14,448 [whoscored.py:read_events:688]
+[297/306] Retrieving game with id=1834485
+
+INFO 2026-03-04 01:08:25,813 [whoscored.py:read_events:688]
+[298/306] Retrieving game with id=1834457
+
+INFO 2026-03-04 01:08:38,611 [whoscored.py:read_events:688]
+[299/306] Retrieving game with id=1834449
+
+INFO 2026-03-04 01:08:52,660 [whoscored.py:read_events:688]
+[300/306] Retrieving game with id=1834461
+
+INFO 2026-03-04 01:09:06,171 [whoscored.py:read_events:688]
+[301/306] Retrieving game with id=1834453
+
+INFO 2026-03-04 01:09:22,377 [whoscored.py:read_events:688]
+[302/306] Retrieving game with id=1834455
+
+INFO 2026-03-04 01:09:34,474 [whoscored.py:read_events:688]
+[303/306] Retrieving game with id=1834451
+
+INFO 2026-03-04 01:09:46,896 [whoscored.py:read_events:688]
+[304/306] Retrieving game with id=1834459
+
+INFO 2026-03-04 01:09:59,446 [whoscored.py:read_events:688]
+[305/306] Retrieving game with id=1834447
+
+INFO 2026-03-04 01:10:10,708 [whoscored.py:read_events:688]
+[306/306] Retrieving game with id=1834463
+

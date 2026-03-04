@@ -133,6 +133,16 @@ single_season,2324,18,-0.663372,,,Kurve nicht konkav; kein internes Maximum im b
 single_season,2425,18,-0.566748,,,Maximum liegt ausserhalb des beobachteten Altersbereichs (24.25-27.86).
 ```
 
+### `bundesliga_rq4_home_away_player_ratings.csv` (selected real rows)
+
+```csv
+season,season_label,home_away,player,player_id,matches,teams,avg_overall_rating,median_overall_rating,best_overall_rating,worst_overall_rating,starts,motm_awards,eligible_for_leaderboard
+2425,2024/2025,home,Omar Marmoush,394749,8,1,8.27,8.285,10.0,6.15,8,3,True
+2425,2024/2025,away,Omar Marmoush,394749,9,1,8.201111,8.28,10.0,6.54,9,6,True
+2324,2023/2024,home,Harry Kane,83532,16,1,8.058125,8.04,10.0,6.1,16,7,True
+2324,2023/2024,away,Alejandro Grimaldo,107252,16,1,7.89125,7.955,8.92,6.81,15,6,True
+```
+
 ## Current Data-Driven Conclusions
 
 Based on current saved outputs:
@@ -144,6 +154,11 @@ Based on current saved outputs:
   - `2024/25`: oldest `1. FC Union Berlin` (`27.86`), youngest `RB Leipzig` (`24.25`)
 - RQ9 shows a negative age-efficiency correlation in both seasons and overall (`pearson_r` approx `-0.57` to `-0.66`), meaning older squads in this sample tend to convert shots less efficiently.
 - The quadratic model does not find a stable in-range peak age for team efficiency in the current data (see `model_note` in `bundesliga_rq9_optimal_age_summary.csv`).
+- RQ4 (WhoScored ratings):
+  - `2023/24` top home avg rating: `Xavi Simons` (`8.066`, 16 matches)
+  - `2023/24` top away avg rating: `Alejandro Grimaldo` (`7.891`, 16 matches)
+  - `2024/25` top home and away avg rating: `Omar Marmoush` (`8.270` home, `8.201` away)
+  - Across eligible players (`matches >= 5`), mean home avg rating (`6.635`) is slightly above away (`6.561`).
 
 ## Notes
 
