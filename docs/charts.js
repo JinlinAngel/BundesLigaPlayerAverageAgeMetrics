@@ -7,17 +7,17 @@ const COLORS = {
   border: "#d9d9d9",
 };
 
-const DATA_ROOT = "./data";
+const DATA_ROOT = new URL("./data/", import.meta.url);
 const CSV_FILES = {
-  coreTeamAgeSummary: `${DATA_ROOT}/other/bundesliga_team_age_summary.csv`,
-  coreSeasonAgeSummary: `${DATA_ROOT}/other/bundesliga_season_age_summary.csv`,
-  rq4Ratings: `${DATA_ROOT}/rq4/rq4_home_away_player_ratings.csv`,
-  rq4Delta: `${DATA_ROOT}/rq4/rq4_player_home_away_delta.csv`,
-  rq9TeamAgeEfficiency: `${DATA_ROOT}/rq9/rq9_team_age_vs_efficiency.csv`,
-  rq9TeamMatchEfficiency: `${DATA_ROOT}/rq9/rq9_team_match_efficiency.csv`,
-  rq9OptimalAgeSummary: `${DATA_ROOT}/rq9/rq9_optimal_age_summary.csv`,
-  rq9PlayerAgeProfile: `${DATA_ROOT}/rq9/rq9_player_age_profile.csv`,
-  rq9PlayerBestAge: `${DATA_ROOT}/rq9/rq9_player_best_age.csv`,
+  coreTeamAgeSummary: new URL("other/bundesliga_team_age_summary.csv", DATA_ROOT).href,
+  coreSeasonAgeSummary: new URL("other/bundesliga_season_age_summary.csv", DATA_ROOT).href,
+  rq4Ratings: new URL("rq4/rq4_home_away_player_ratings.csv", DATA_ROOT).href,
+  rq4Delta: new URL("rq4/rq4_player_home_away_delta.csv", DATA_ROOT).href,
+  rq9TeamAgeEfficiency: new URL("rq9/rq9_team_age_vs_efficiency.csv", DATA_ROOT).href,
+  rq9TeamMatchEfficiency: new URL("rq9/rq9_team_match_efficiency.csv", DATA_ROOT).href,
+  rq9OptimalAgeSummary: new URL("rq9/rq9_optimal_age_summary.csv", DATA_ROOT).href,
+  rq9PlayerAgeProfile: new URL("rq9/rq9_player_age_profile.csv", DATA_ROOT).href,
+  rq9PlayerBestAge: new URL("rq9/rq9_player_best_age.csv", DATA_ROOT).href,
 };
 
 const csvCache = new Map();
