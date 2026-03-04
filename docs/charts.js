@@ -7,10 +7,10 @@ const COLORS = {
   border: "#d9d9d9",
 };
 
-const DATA_ROOT = "../data/outputs";
+const DATA_ROOT = "./data";
 const CSV_FILES = {
-  coreTeamAgeSummary: `${DATA_ROOT}/core/bundesliga_team_age_summary.csv`,
-  coreSeasonAgeSummary: `${DATA_ROOT}/core/bundesliga_season_age_summary.csv`,
+  coreTeamAgeSummary: `${DATA_ROOT}/other/bundesliga_team_age_summary.csv`,
+  coreSeasonAgeSummary: `${DATA_ROOT}/other/bundesliga_season_age_summary.csv`,
   rq4Ratings: `${DATA_ROOT}/rq4/rq4_home_away_player_ratings.csv`,
   rq4Delta: `${DATA_ROOT}/rq4/rq4_player_home_away_delta.csv`,
   rq9TeamAgeEfficiency: `${DATA_ROOT}/rq9/rq9_team_age_vs_efficiency.csv`,
