@@ -7,19 +7,16 @@ const COLORS = {
   border: "#d9d9d9",
 };
 
-const scriptSource = document.currentScript?.src || window.location.href;
-const ASSET_ROOT = new URL(".", scriptSource);
-const DATA_ROOT = new URL("./data/", ASSET_ROOT);
 const CSV_FILES = {
-  coreTeamAgeSummary: new URL("other/bundesliga_team_age_summary.csv", DATA_ROOT).toString(),
-  coreSeasonAgeSummary: new URL("other/bundesliga_season_age_summary.csv", DATA_ROOT).toString(),
-  rq4Ratings: new URL("rq4/rq4_home_away_player_ratings.csv", DATA_ROOT).toString(),
-  rq4Delta: new URL("rq4/rq4_player_home_away_delta.csv", DATA_ROOT).toString(),
-  rq9TeamAgeEfficiency: new URL("rq9/rq9_team_age_vs_efficiency.csv", DATA_ROOT).toString(),
-  rq9TeamMatchEfficiency: new URL("rq9/rq9_team_match_efficiency.csv", DATA_ROOT).toString(),
-  rq9OptimalAgeSummary: new URL("rq9/rq9_optimal_age_summary.csv", DATA_ROOT).toString(),
-  rq9PlayerAgeProfile: new URL("rq9/rq9_player_age_profile.csv", DATA_ROOT).toString(),
-  rq9PlayerBestAge: new URL("rq9/rq9_player_best_age.csv", DATA_ROOT).toString(),
+  coreTeamAgeSummary: "data/other/bundesliga_team_age_summary.csv",
+  coreSeasonAgeSummary: "data/other/bundesliga_season_age_summary.csv",
+  rq4Ratings: "data/rq4/rq4_home_away_player_ratings.csv",
+  rq4Delta: "data/rq4/rq4_player_home_away_delta.csv",
+  rq9TeamAgeEfficiency: "data/rq9/rq9_team_age_vs_efficiency.csv",
+  rq9TeamMatchEfficiency: "data/rq9/rq9_team_match_efficiency.csv",
+  rq9OptimalAgeSummary: "data/rq9/rq9_optimal_age_summary.csv",
+  rq9PlayerAgeProfile: "data/rq9/rq9_player_age_profile.csv",
+  rq9PlayerBestAge: "data/rq9/rq9_player_best_age.csv",
 };
 
 const csvCache = new Map();
@@ -139,9 +136,12 @@ async function loadCsv(path) {
     const promise = fetch(path)
       .then((response) => {
         if (!response.ok) {
-          throw new Error(`Failed to load ${path} (${response.status})`);
+          throw new Error(`Failed to load ${path} via ${response.url} (${response.status})`);
         }
         return response.text();
+      })
+      .catch((error) => {
+        throw new Error(`CSV load error for ${path} on ${window.location.pathname}: ${error.message}`);
       })
       .then(parseCsv);
     csvCache.set(path, promise);
