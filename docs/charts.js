@@ -642,6 +642,17 @@ async function renderRq4Page() {
   setText("rq4-metric-away-mean", formatDecimal(meanAway, 3));
   setText("rq4-metric-home-away-delta", formatSigned(meanDelta, 3));
   setText("rq4-metric-top-player", buildRq4TopPlayerMetric(topHome, topAway));
+  const rq4AnswerSummary =
+    topHome && topAway
+      ? topHome.player === topAway.player
+        ? `The data answers RQ4 by showing that ${topHome.player} is the strongest-rated player in both home and away matches among leaderboard-eligible players.`
+        : `The data answers RQ4 by showing that ${topHome.player} leads the home ratings while ${topAway.player} leads the away ratings among leaderboard-eligible players.`
+      : "The data answers RQ4 by identifying the strongest-rated home and away performers.";
+  setText("rq4-answer-summary", rq4AnswerSummary);
+  setText(
+    "rq4-answer-detail",
+    `Across the league, the mean rating is still slightly higher at home than away (${formatDecimal(meanHome, 3)} vs ${formatDecimal(meanAway, 3)}, ${formatSigned(meanDelta, 3)}), so the home effect is present but modest.`
+  );
 
   if (topPositive.length) {
     setText("rq4-key-positive", `Strongest positive deltas: ${formatNamedList(topPositive.slice(0, 3), "player", "delta", 3, true)}.`);
@@ -724,6 +735,14 @@ async function renderRq9Page() {
   setText(
     "rq9-metric-band-efficiency",
     `${formatDecimal(bestBandEfficiency, 3)} (${formatCount(bestBandGoals)}/${formatCount(bestBandShots)})`
+  );
+  setText(
+    "rq9-answer-summary",
+    `The data answers RQ9 with a negative association: as team-average age rises within the observed range, shot efficiency tends to fall (Pearson r = ${formatDecimal(pearson, 3)}).`
+  );
+  setText(
+    "rq9-answer-detail",
+    `The ${formatDecimal(minAvgAge, 2)}-${formatDecimal(maxAvgAge, 2)} range refers to team-average ages across the 18 Bundesliga teams. The separate ${formatCount(bestAgeInt)}-year result comes from player-level age bands, where all individual players are grouped by age and then compared by goals_per_shot.`
   );
 
   if (rankingRows.length) {

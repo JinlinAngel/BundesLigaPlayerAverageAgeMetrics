@@ -2467,3 +2467,468 @@ INFO 2026-03-04 21:54:12,242 [whoscored.py:read_schedule:396]
 INFO 2026-03-04 21:54:12,251 [whoscored.py:read_schedule:396]
 [10/10] Retrieving fixtures for GER-Bundesliga 2425
 
+INFO 2026-03-05 22:54:27,386 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-05 22:54:27,392 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-05 23:16:19,016 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-05 23:16:19,021 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-05 23:16:19,042 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-05 23:16:19,182 [libraries.py:_load_library:397]
+Successfully loaded TLS library: C:\Users\finnb\AppData\Roaming\Python\Python313\site-packages\tls_requests\bin\tls-client-xgo-1.13.1-windows-amd64.dll
+
+INFO 2026-03-05 23:23:07,629 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-05 23:23:11,330 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\WhoScored
+
+INFO 2026-03-05 23:23:15,240 [whoscored.py:read_schedule:365]
+Retrieving calendar for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:23:15,243 [whoscored.py:read_schedule:396]
+[1/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:23:15,252 [whoscored.py:read_schedule:396]
+[2/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:23:15,259 [whoscored.py:read_schedule:396]
+[3/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:23:15,264 [whoscored.py:read_schedule:396]
+[4/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:23:15,271 [whoscored.py:read_schedule:396]
+[5/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:23:15,277 [whoscored.py:read_schedule:396]
+[6/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:23:15,284 [whoscored.py:read_schedule:396]
+[7/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:23:15,291 [whoscored.py:read_schedule:396]
+[8/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:23:15,297 [whoscored.py:read_schedule:396]
+[9/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:23:15,304 [whoscored.py:read_schedule:396]
+[10/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:28:29,162 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-05 23:28:29,167 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-05 23:28:29,188 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-05 23:28:29,198 [libraries.py:_load_library:397]
+Successfully loaded TLS library: C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\bin\tls-client-xgo-1.13.1-windows-amd64.dll
+
+INFO 2026-03-05 23:30:39,173 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-05 23:30:39,178 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-05 23:30:39,203 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-05 23:30:39,209 [libraries.py:_load_library:397]
+Successfully loaded TLS library: C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\bin\tls-client-xgo-1.13.1-windows-amd64.dll
+
+INFO 2026-03-05 23:33:15,850 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-05 23:33:19,852 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\WhoScored
+
+INFO 2026-03-05 23:33:24,636 [whoscored.py:read_schedule:365]
+Retrieving calendar for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:33:24,639 [whoscored.py:read_schedule:396]
+[1/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:33:24,648 [whoscored.py:read_schedule:396]
+[2/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:33:24,657 [whoscored.py:read_schedule:396]
+[3/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:33:24,667 [whoscored.py:read_schedule:396]
+[4/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:33:24,675 [whoscored.py:read_schedule:396]
+[5/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:33:24,683 [whoscored.py:read_schedule:396]
+[6/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:33:24,690 [whoscored.py:read_schedule:396]
+[7/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:33:24,697 [whoscored.py:read_schedule:396]
+[8/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:33:24,704 [whoscored.py:read_schedule:396]
+[9/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:33:24,712 [whoscored.py:read_schedule:396]
+[10/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:34:07,874 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-05 23:34:07,885 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-05 23:34:07,912 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\WhoScored
+
+INFO 2026-03-05 23:34:11,735 [whoscored.py:read_schedule:365]
+Retrieving calendar for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:34:11,738 [whoscored.py:read_schedule:396]
+[1/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:34:11,751 [whoscored.py:read_schedule:396]
+[2/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:34:11,760 [whoscored.py:read_schedule:396]
+[3/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:34:11,768 [whoscored.py:read_schedule:396]
+[4/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:34:11,779 [whoscored.py:read_schedule:396]
+[5/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:34:11,791 [whoscored.py:read_schedule:396]
+[6/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:34:11,800 [whoscored.py:read_schedule:396]
+[7/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:34:11,809 [whoscored.py:read_schedule:396]
+[8/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:34:11,817 [whoscored.py:read_schedule:396]
+[9/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:34:11,826 [whoscored.py:read_schedule:396]
+[10/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:34:58,632 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-05 23:34:58,637 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-05 23:34:58,650 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-05 23:34:58,653 [libraries.py:_load_library:397]
+Successfully loaded TLS library: C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\bin\tls-client-xgo-1.13.1-windows-amd64.dll
+
+INFO 2026-03-05 23:37:57,796 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-05 23:38:02,468 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\WhoScored
+
+INFO 2026-03-05 23:38:06,062 [whoscored.py:read_schedule:365]
+Retrieving calendar for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:38:06,064 [whoscored.py:read_schedule:396]
+[1/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:38:06,074 [whoscored.py:read_schedule:396]
+[2/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:38:06,085 [whoscored.py:read_schedule:396]
+[3/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:38:06,093 [whoscored.py:read_schedule:396]
+[4/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:38:06,103 [whoscored.py:read_schedule:396]
+[5/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:38:06,112 [whoscored.py:read_schedule:396]
+[6/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:38:06,121 [whoscored.py:read_schedule:396]
+[7/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:38:06,131 [whoscored.py:read_schedule:396]
+[8/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:38:06,141 [whoscored.py:read_schedule:396]
+[9/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:38:06,151 [whoscored.py:read_schedule:396]
+[10/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:45:40,626 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-05 23:45:40,631 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-05 23:45:40,658 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-05 23:45:40,670 [libraries.py:_load_library:397]
+Successfully loaded TLS library: C:\Users\finnb\AppData\Roaming\Python\Python313\site-packages\tls_requests\bin\tls-client-xgo-1.13.1-windows-amd64.dll
+
+INFO 2026-03-05 23:48:26,002 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-05 23:48:30,203 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\WhoScored
+
+INFO 2026-03-05 23:48:33,529 [whoscored.py:read_schedule:365]
+Retrieving calendar for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:48:33,532 [whoscored.py:read_schedule:396]
+[1/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:48:33,537 [whoscored.py:read_schedule:396]
+[2/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:48:33,542 [whoscored.py:read_schedule:396]
+[3/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:48:33,546 [whoscored.py:read_schedule:396]
+[4/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:48:33,551 [whoscored.py:read_schedule:396]
+[5/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:48:33,556 [whoscored.py:read_schedule:396]
+[6/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:48:33,562 [whoscored.py:read_schedule:396]
+[7/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:48:33,568 [whoscored.py:read_schedule:396]
+[8/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:48:33,574 [whoscored.py:read_schedule:396]
+[9/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:48:33,582 [whoscored.py:read_schedule:396]
+[10/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:53:48,310 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-05 23:53:48,315 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-05 23:53:48,333 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-05 23:53:48,337 [libraries.py:_load_library:397]
+Successfully loaded TLS library: C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.venv\Lib\site-packages\tls_requests\bin\tls-client-xgo-1.13.1-windows-amd64.dll
+
+INFO 2026-03-05 23:56:11,139 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-05 23:56:15,216 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\WhoScored
+
+INFO 2026-03-05 23:56:18,537 [whoscored.py:read_schedule:365]
+Retrieving calendar for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:56:18,539 [whoscored.py:read_schedule:396]
+[1/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:56:18,545 [whoscored.py:read_schedule:396]
+[2/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:56:18,552 [whoscored.py:read_schedule:396]
+[3/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:56:18,558 [whoscored.py:read_schedule:396]
+[4/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:56:18,566 [whoscored.py:read_schedule:396]
+[5/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:56:18,573 [whoscored.py:read_schedule:396]
+[6/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:56:18,583 [whoscored.py:read_schedule:396]
+[7/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:56:18,593 [whoscored.py:read_schedule:396]
+[8/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:56:18,600 [whoscored.py:read_schedule:396]
+[9/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-05 23:56:18,607 [whoscored.py:read_schedule:396]
+[10/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:01:06,408 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-06 00:01:06,413 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-06 00:01:06,431 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-06 00:01:06,434 [libraries.py:_load_library:397]
+Successfully loaded TLS library: C:\Users\finnb\AppData\Roaming\Python\Python313\site-packages\tls_requests\bin\tls-client-xgo-1.13.1-windows-amd64.dll
+
+INFO 2026-03-06 00:31:54,224 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-06 00:31:54,229 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-06 00:31:54,257 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-06 00:31:54,353 [libraries.py:_load_library:397]
+Successfully loaded TLS library: C:\Users\finnb\AppData\Roaming\Python\Python313\site-packages\tls_requests\bin\tls-client-xgo-1.13.1-windows-amd64.dll
+
+INFO 2026-03-06 00:34:19,192 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-06 00:34:22,684 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\WhoScored
+
+INFO 2026-03-06 00:34:27,029 [whoscored.py:read_schedule:365]
+Retrieving calendar for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:34:27,033 [whoscored.py:read_schedule:396]
+[1/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:34:27,040 [whoscored.py:read_schedule:396]
+[2/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:34:27,047 [whoscored.py:read_schedule:396]
+[3/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:34:27,051 [whoscored.py:read_schedule:396]
+[4/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:34:27,056 [whoscored.py:read_schedule:396]
+[5/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:34:27,061 [whoscored.py:read_schedule:396]
+[6/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:34:27,069 [whoscored.py:read_schedule:396]
+[7/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:34:27,075 [whoscored.py:read_schedule:396]
+[8/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:34:27,079 [whoscored.py:read_schedule:396]
+[9/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:34:27,085 [whoscored.py:read_schedule:396]
+[10/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:45:42,483 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-06 00:45:42,489 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-06 00:45:42,510 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-06 00:45:42,513 [libraries.py:_load_library:397]
+Successfully loaded TLS library: C:\Users\finnb\AppData\Roaming\Python\Python313\site-packages\tls_requests\bin\tls-client-xgo-1.13.1-windows-amd64.dll
+
+INFO 2026-03-06 00:45:57,750 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-06 00:45:57,757 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-06 00:45:57,777 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-06 00:45:57,780 [libraries.py:_load_library:397]
+Successfully loaded TLS library: C:\Users\finnb\AppData\Roaming\Python\Python313\site-packages\tls_requests\bin\tls-client-xgo-1.13.1-windows-amd64.dll
+
+INFO 2026-03-06 00:47:30,062 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-06 00:47:30,066 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-06 00:47:30,078 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-06 00:47:30,080 [libraries.py:_load_library:397]
+Successfully loaded TLS library: C:\Users\finnb\AppData\Roaming\Python\Python313\site-packages\tls_requests\bin\tls-client-xgo-1.13.1-windows-amd64.dll
+
+INFO 2026-03-06 00:49:25,159 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\teamname_replacements.json.
+
+INFO 2026-03-06 00:49:25,163 [_config.py:<module>:198]
+No custom league dict found. You can configure additional leagues in C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\config\league_dict.json.
+
+INFO 2026-03-06 00:49:25,176 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-06 00:49:25,178 [libraries.py:_load_library:397]
+Successfully loaded TLS library: C:\Users\finnb\AppData\Roaming\Python\Python313\site-packages\tls_requests\bin\tls-client-xgo-1.13.1-windows-amd64.dll
+
+INFO 2026-03-06 00:51:52,470 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\ESPN
+
+INFO 2026-03-06 00:51:56,136 [_common.py:__init__:249]
+Saving cached data to C:\Users\finnb\PycharmProjects\BundesLigaPlayerAverageAgeMetrics\.soccerdata_cache\data\WhoScored
+
+INFO 2026-03-06 00:51:59,451 [whoscored.py:read_schedule:365]
+Retrieving calendar for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:51:59,454 [whoscored.py:read_schedule:396]
+[1/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:51:59,462 [whoscored.py:read_schedule:396]
+[2/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:51:59,468 [whoscored.py:read_schedule:396]
+[3/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:51:59,476 [whoscored.py:read_schedule:396]
+[4/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:51:59,482 [whoscored.py:read_schedule:396]
+[5/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:51:59,490 [whoscored.py:read_schedule:396]
+[6/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:51:59,495 [whoscored.py:read_schedule:396]
+[7/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:51:59,500 [whoscored.py:read_schedule:396]
+[8/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:51:59,507 [whoscored.py:read_schedule:396]
+[9/10] Retrieving fixtures for GER-Bundesliga 2425
+
+INFO 2026-03-06 00:51:59,512 [whoscored.py:read_schedule:396]
+[10/10] Retrieving fixtures for GER-Bundesliga 2425
+
