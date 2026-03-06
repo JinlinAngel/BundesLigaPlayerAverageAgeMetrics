@@ -7,6 +7,7 @@ Output: one CSV-ready DataFrame with player match ratings.
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 import pandas as pd
@@ -17,8 +18,6 @@ from pipeline_utils import (
     fix_mojibake,
     format_progress,
     normalize_season_label,
-    parse_float,
-    parse_int,
     should_log_progress,
 )
 
@@ -36,6 +35,33 @@ WHOSCORED_MATCH_COLUMNS = [
     "is_starting_xi",
     "is_man_of_the_match",
 ]
+
+
+def to_int_or_none(value: object) -> int | None:
+    """Convert one loose value into an integer when possible.
+
+    Input: raw source value.
+    Output: integer value or `None`.
+    """
+    try:
+        return int(float(str(value).strip()))
+    except (TypeError, ValueError):
+        return None
+
+
+def to_float_or_none(value: object) -> float | None:
+    """Convert one loose value into a float when possible.
+
+    Input: raw source value.
+    Output: float value or `None`.
+    """
+    try:
+        number = float(str(value).strip())
+    except (TypeError, ValueError):
+        return None
+    if not math.isfinite(number):
+        return None
+    return number
 
 
 def build_whoscored_dataset(config: Config) -> pd.DataFrame:
@@ -71,7 +97,7 @@ def load_whoscored_match_rows(config: Config) -> pd.DataFrame:
             f"{missing_text}"
         )
 
-    schedule["game_id"] = schedule["game_id"].apply(parse_int)
+    schedule["game_id"] = schedule["game_id"].apply(to_int_or_none)
     schedule = schedule.dropna(subset=["game_id"]).copy()
     schedule["game_id"] = schedule["game_id"].astype(int)
     schedule["season"] = schedule["season"].astype(str)
@@ -236,13 +262,13 @@ def extract_overall_rating(player_data: dict) -> float | None:
         numeric: list[float] = []
         ordered_keys = sorted(
             ratings.keys(),
-            key=lambda value: parse_int(value) or 0,
+            key=lambda value: to_int_or_none(value) or 0,
         )
         for key in ordered_keys:
-            value = parse_float(ratings.get(key))
+            value = to_float_or_none(ratings.get(key))
             if value is not None:
                 numeric.append(value)
         if numeric:
             return float(numeric[-1])
 
-    return parse_float(player_data.get("rating"))
+    return to_float_or_none(player_data.get("rating"))

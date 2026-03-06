@@ -7,6 +7,7 @@ Output: one CSV-ready DataFrame with player and team shooting data.
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 import pandas as pd
@@ -21,8 +22,6 @@ from pipeline_utils import (
     format_progress,
     normalize_season_label,
     parse_espn_display_dob,
-    parse_float,
-    parse_int,
     season_reference_date,
     should_log_progress,
 )
@@ -50,6 +49,33 @@ PLAYER_COLUMNS = [
     "appearances",
     "age_ref",
 ]
+
+
+def to_int_or_none(value: object) -> int | None:
+    """Convert one loose value into an integer when possible.
+
+    Input: raw source value.
+    Output: integer value or `None`.
+    """
+    try:
+        return int(float(str(value).strip()))
+    except (TypeError, ValueError):
+        return None
+
+
+def to_float_or_none(value: object) -> float | None:
+    """Convert one loose value into a float when possible.
+
+    Input: raw source value.
+    Output: float value or `None`.
+    """
+    try:
+        number = float(str(value).strip())
+    except (TypeError, ValueError):
+        return None
+    if not math.isfinite(number):
+        return None
+    return number
 
 
 def build_espn_dataset(config: Config) -> pd.DataFrame:
@@ -168,7 +194,7 @@ def fetch_athlete_profiles(
         age_ref = (
             age_years_at_reference_date(birth_date, reference_date)
             if birth_date is not None
-            else parse_float(payload.get("age"))
+            else to_float_or_none(payload.get("age"))
         )
         rows.append({"player_id": player_id, "age_ref": age_ref})
         if should_log_progress(idx, total, interval):
@@ -249,7 +275,7 @@ def parse_summary_payload(
     goals_by_side: dict[str, int] = {}
     for competitor in competitors:
         side = str(competitor.get("homeAway") or "").strip().lower()
-        goals = parse_int(competitor.get("score"))
+        goals = to_int_or_none(competitor.get("score"))
         if side and goals is not None:
             goals_by_side[side] = goals
 
@@ -262,7 +288,7 @@ def parse_summary_payload(
             or ""
         ).strip()
         stats = team_data.get("statistics", [])
-        shots = parse_int(
+        shots = to_int_or_none(
             next(
                 (
                     stat.get("displayValue")
@@ -316,7 +342,7 @@ def parse_summary_payload(
                 continue
 
             stats = player_data.get("stats", []) or []
-            player_goals = parse_int(
+            player_goals = to_int_or_none(
                 next(
                     (
                         stat.get("displayValue")
@@ -326,7 +352,7 @@ def parse_summary_payload(
                     0,
                 )
             )
-            player_shots = parse_int(
+            player_shots = to_int_or_none(
                 next(
                     (
                         stat.get("displayValue")

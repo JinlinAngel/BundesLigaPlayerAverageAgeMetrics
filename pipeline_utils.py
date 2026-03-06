@@ -1,4 +1,4 @@
-"""Shared helper functions for the Bundesliga data pipeline.
+﻿"""Shared helper functions for the Bundesliga data pipeline.
 
 Input: values from the ESPN and WhoScored source loaders.
 Output: cleaned values, common constants, and small reusable helpers.
@@ -19,8 +19,6 @@ import pandas as pd
 
 TARGET_SEASON = "2425"
 DEFAULT_LEAGUE = "GER-Bundesliga"
-RQ4_MIN_MATCHES_FOR_LEADERBOARD = 5
-RQ4_MIN_MATCHES_PER_SIDE_FOR_DELTA = 5
 ESPN_ATHLETE_URL = (
     "https://site.web.api.espn.com/apis/common/v3/sports/"
     "soccer/athletes/{athlete_id}"
@@ -158,57 +156,6 @@ def format_progress(label: str, current: int, total: int) -> str:
     )
 
 
-def parse_int(value: object) -> int | None:
-    """Convert a loose source value into an integer when possible.
-
-    Input: raw value from JSON, CSV, or pandas objects.
-    Output: integer value or `None`.
-    """
-    if value is None:
-        return None
-
-    text = str(value).strip()
-    if not text or text.lower() in {"nan", "none", "null"}:
-        return None
-
-    try:
-        return int(float(text))
-    except ValueError:
-        return None
-
-
-def parse_float(value: object) -> float | None:
-    """Convert a loose source value into a float when possible.
-
-    Input: raw value from JSON, CSV, or pandas objects.
-    Output: float value or `None`.
-    """
-    if value is None:
-        return None
-
-    text = str(value).strip()
-    if not text or text.lower() in {"nan", "none", "null"}:
-        return None
-
-    try:
-        return float(text)
-    except ValueError:
-        return None
-
-
-def to_bool(value: object) -> bool:
-    """Convert loose truthy values into a Python boolean.
-
-    Input: raw boolean-like value.
-    Output: `True` or `False`.
-    """
-    if isinstance(value, bool):
-        return value
-    if value is None:
-        return False
-    return str(value).strip().lower() in {"1", "true", "t", "yes", "y"}
-
-
 def fix_mojibake(text: str) -> str:
     """Repair common UTF-8 mojibake in player and team names.
 
@@ -243,15 +190,3 @@ def round_numeric_columns(
             numeric = pd.to_numeric(out[column], errors="coerce")
             out[column] = numeric.round(digits)
     return out
-
-
-def fit_correlation(x: pd.Series, y: pd.Series) -> float:
-    """Return the Pearson correlation for two numeric Series.
-
-    Input: two pandas Series.
-    Output: float correlation or `nan`.
-    """
-    valid = pd.DataFrame({"x": x, "y": y}).dropna()
-    if len(valid) < 2:
-        return float("nan")
-    return float(valid["x"].corr(valid["y"]))

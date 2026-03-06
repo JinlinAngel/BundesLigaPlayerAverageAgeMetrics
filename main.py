@@ -11,14 +11,17 @@ from typing import Iterable
 
 import pandas as pd
 
-from analysis_of_rq4_rq9_questions import (
-    build_analysis_tables,
-    build_terminal_answers,
-    write_analysis_outputs,
-)
 from espn_data_download_pipeline import build_espn_dataset
 from pipeline_config import build_config, configure_env, parse_args
 from pipeline_utils import round_numeric_columns
+from rq4_analysis import RQ4_RATINGS_FILE, build_rq4_answer, build_rq4_tables
+from rq9_analysis import (
+    OPTIMAL_AGE_FILE,
+    PLAYER_BEST_AGE_FILE,
+    TEAM_EFFICIENCY_FILE,
+    build_rq9_answer,
+    build_rq9_tables,
+)
 from whoscored_data_download_pipeline import build_whoscored_dataset
 
 
@@ -98,6 +101,57 @@ def print_answer_report(answers: dict[str, str]) -> None:
         answer = answers.get(key, "").strip()
         if answer:
             print(answer)
+
+
+def build_analysis_tables(
+    rq9_df: pd.DataFrame,
+    rq4_df: pd.DataFrame,
+) -> dict[str, pd.DataFrame]:
+    """Build all derived analysis tables used by the docs pages.
+
+    Input: raw RQ9 and RQ4 DataFrames.
+    Output: dictionary from relative CSV path to DataFrame.
+    """
+    tables: dict[str, pd.DataFrame] = {}
+    tables.update(build_rq4_tables(rq4_df))
+    tables.update(build_rq9_tables(rq9_df))
+    return tables
+
+
+def write_analysis_outputs(
+    tables: dict[str, pd.DataFrame],
+    output_root: Path = Path(__file__).resolve().parent / "docs" / "data",
+) -> list[Path]:
+    """Write all derived analysis tables to disk.
+
+    Input: table dictionary and output root path.
+    Output: list of written file paths.
+    """
+    written_paths: list[Path] = []
+    for relative_path, df in tables.items():
+        path = output_root / relative_path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        df.to_csv(path, index=False)
+        written_paths.append(path)
+    return written_paths
+
+
+def build_terminal_answers(
+    tables: dict[str, pd.DataFrame],
+) -> dict[str, str]:
+    """Build short answer strings for the terminal output.
+
+    Input: dictionary with derived analysis tables.
+    Output: dictionary with short text answers for RQ4 and RQ9.
+    """
+    return {
+        "rq4": build_rq4_answer(tables[RQ4_RATINGS_FILE]),
+        "rq9": build_rq9_answer(
+            tables[TEAM_EFFICIENCY_FILE],
+            tables[PLAYER_BEST_AGE_FILE],
+            tables[OPTIMAL_AGE_FILE],
+        ),
+    }
 
 
 def main(argv: Iterable[str] | None = None) -> int:

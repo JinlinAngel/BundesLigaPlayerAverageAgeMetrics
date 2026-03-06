@@ -14,9 +14,9 @@ CSV files for the report pages in `docs/`.
   - Builds the small `Config` object used by the pipeline.
   - Prepares the output directory and shared environment settings.
 - `pipeline_utils.py`
-  - Stores shared constants.
-  - Provides small helper functions for parsing values, fixing names,
-    formatting progress, rounding output, and loading `soccerdata`.
+  - Stores shared pipeline constants.
+  - Provides small helper functions used by both source pipelines.
+  - Handles season labels, progress output, text cleanup, and `soccerdata`.
 - `espn_data_download_pipeline.py`
   - Builds the ESPN dataset for RQ9.
   - Loads match sheets, player profile ages, and cached match summary files.
@@ -25,10 +25,14 @@ CSV files for the report pages in `docs/`.
   - Builds the WhoScored dataset for RQ4.
   - Loads the season schedule and cached event files.
   - Returns one row per match and player with rating information.
-- `analysis_of_rq4_rq9_questions.py`
-  - Creates the derived analysis tables used by the website.
-  - Aggregates the RQ4 and RQ9 metrics.
-  - Builds the short terminal answers for both research questions.
+- `rq4_analysis.py`
+  - Contains the RQ4-specific analysis logic.
+  - Builds the home-vs-away rating tables.
+  - Builds the short terminal answer for RQ4.
+- `rq9_analysis.py`
+  - Contains the RQ9-specific analysis logic.
+  - Builds the age and efficiency tables.
+  - Builds the short terminal answer for RQ9.
 
 ## Run
 

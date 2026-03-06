@@ -1,31 +1,23 @@
-﻿"""Build the derived analysis tables for RQ4 and RQ9.
+﻿"""Build the derived analysis tables for RQ9.
 
-Input: raw ESPN and WhoScored output tables.
-Output: derived CSV tables and short terminal answer strings.
+Input: raw ESPN output data.
+Output: derived RQ9 tables and short terminal answer text.
 """
 
 from __future__ import annotations
 
-import argparse
-from pathlib import Path
-from typing import Iterable
-
 import numpy as np
 import pandas as pd
 
-from pipeline_config import DEFAULT_OUTPUT_DIR
-from pipeline_utils import (
-    RQ4_MIN_MATCHES_FOR_LEADERBOARD,
-    RQ4_MIN_MATCHES_PER_SIDE_FOR_DELTA,
-    fit_correlation,
-    to_bool,
-)
 
-
-RAW_RQ9_FILE = "espn_player_match_data_for_rq9.csv"
-RAW_RQ4_FILE = "whoscored_player_match_data_for_rq4.csv"
-DEFAULT_DOCS_DATA_DIR = Path(__file__).resolve().parent / "docs" / "data"
 BEST_AGE_MIN_TOTAL_SHOTS = 80
+SEASON_SUMMARY_FILE = "other/bundesliga_season_age_summary.csv"
+TEAM_SUMMARY_FILE = "other/bundesliga_team_age_summary.csv"
+TEAM_MATCH_FILE = "rq9/rq9_team_match_efficiency.csv"
+TEAM_EFFICIENCY_FILE = "rq9/rq9_team_age_vs_efficiency.csv"
+PLAYER_AGE_PROFILE_FILE = "rq9/rq9_player_age_profile.csv"
+PLAYER_BEST_AGE_FILE = "rq9/rq9_player_best_age.csv"
+OPTIMAL_AGE_FILE = "rq9/rq9_optimal_age_summary.csv"
 
 
 def first_non_null(series: pd.Series) -> object:
@@ -51,6 +43,18 @@ def safe_ratio(numerator: pd.Series, denominator: pd.Series) -> pd.Series:
     return top.divide(bottom.where(bottom != 0))
 
 
+def fit_correlation(x: pd.Series, y: pd.Series) -> float:
+    """Return the Pearson correlation for two numeric Series.
+
+    Input: two pandas Series.
+    Output: float correlation or `nan`.
+    """
+    valid = pd.DataFrame({"x": x, "y": y}).dropna()
+    if len(valid) < 2:
+        return float("nan")
+    return float(valid["x"].corr(valid["y"]))
+
+
 def normalize_rq9(rq9_df: pd.DataFrame) -> pd.DataFrame:
     """Normalize the raw ESPN table for downstream analysis.
 
@@ -69,25 +73,6 @@ def normalize_rq9(rq9_df: pd.DataFrame) -> pd.DataFrame:
         "team_shots",
     ):
         out[column] = pd.to_numeric(out[column], errors="coerce")
-    return out
-
-
-def normalize_rq4(rq4_df: pd.DataFrame) -> pd.DataFrame:
-    """Normalize the raw WhoScored table for downstream analysis.
-
-    Input: raw RQ4 DataFrame.
-    Output: copied DataFrame with cleaned types.
-    """
-    out = rq4_df.copy()
-    out["season"] = out["season"].astype(str)
-    out["game_id"] = out["game_id"].astype(str)
-    out["player_id"] = out["player_id"].astype(str)
-    out["overall_rating"] = pd.to_numeric(
-        out["overall_rating"],
-        errors="coerce",
-    )
-    out["is_starting_xi"] = out["is_starting_xi"].map(to_bool)
-    out["is_man_of_the_match"] = out["is_man_of_the_match"].map(to_bool)
     return out
 
 
@@ -151,146 +136,7 @@ def build_team_age_summary(rq9_df: pd.DataFrame) -> pd.DataFrame:
     )
 
 
-def build_rq4_home_away_player_ratings(rq4_df: pd.DataFrame) -> pd.DataFrame:
-    """Aggregate player ratings by home and away matches.
-
-    Input: normalized RQ4 DataFrame.
-    Output: DataFrame for `rq4_home_away_player_ratings.csv`.
-    """
-    summary = (
-        rq4_df.groupby(
-            ["season", "season_label", "home_away", "player", "player_id"],
-            dropna=False,
-        )
-        .agg(
-            matches=("game_id", "nunique"),
-            teams=("team", "nunique"),
-            avg_overall_rating=("overall_rating", "mean"),
-            median_overall_rating=("overall_rating", "median"),
-            best_overall_rating=("overall_rating", "max"),
-            worst_overall_rating=("overall_rating", "min"),
-            starts=("is_starting_xi", "sum"),
-            motm_awards=("is_man_of_the_match", "sum"),
-        )
-        .reset_index()
-    )
-    summary["eligible_for_leaderboard"] = (
-        summary["matches"] >= RQ4_MIN_MATCHES_FOR_LEADERBOARD
-    )
-    return summary.sort_values(
-        ["season", "home_away", "avg_overall_rating", "matches", "player"],
-        ascending=[True, True, False, False, True],
-        kind="stable",
-    )
-
-
-def build_rq4_player_home_away_delta(ratings_df: pd.DataFrame) -> pd.DataFrame:
-    """Compare average player ratings between home and away matches.
-
-    Input: aggregated RQ4 ratings DataFrame.
-    Output: DataFrame for `rq4_player_home_away_delta.csv`.
-    """
-    join_keys = ["season", "season_label", "player", "player_id"]
-    value_columns = [
-        "matches",
-        "teams",
-        "avg_overall_rating",
-        "median_overall_rating",
-        "best_overall_rating",
-        "worst_overall_rating",
-        "starts",
-        "motm_awards",
-    ]
-
-    home = ratings_df.loc[
-        ratings_df["home_away"] == "home",
-        join_keys + value_columns,
-    ].copy()
-    away = ratings_df.loc[
-        ratings_df["home_away"] == "away",
-        join_keys + value_columns,
-    ].copy()
-
-    home = home.rename(
-        columns={
-            "matches": "home_matches",
-            "teams": "home_teams",
-            "avg_overall_rating": "home_avg_overall_rating",
-            "median_overall_rating": "home_median_overall_rating",
-            "best_overall_rating": "home_best_overall_rating",
-            "worst_overall_rating": "home_worst_overall_rating",
-            "starts": "home_starts",
-            "motm_awards": "home_motm_awards",
-        }
-    )
-    away = away.rename(
-        columns={
-            "matches": "away_matches",
-            "teams": "away_teams",
-            "avg_overall_rating": "away_avg_overall_rating",
-            "median_overall_rating": "away_median_overall_rating",
-            "best_overall_rating": "away_best_overall_rating",
-            "worst_overall_rating": "away_worst_overall_rating",
-            "starts": "away_starts",
-            "motm_awards": "away_motm_awards",
-        }
-    )
-
-    delta = home.merge(away, how="inner", on=join_keys)
-    delta["matches_total"] = delta["home_matches"] + delta["away_matches"]
-    delta["avg_rating_delta_home_minus_away"] = (
-        delta["home_avg_overall_rating"]
-        - delta["away_avg_overall_rating"]
-    )
-    delta["abs_avg_rating_delta"] = (
-        delta["avg_rating_delta_home_minus_away"].abs()
-    )
-    delta["eligible_both_sides"] = (
-        delta["home_matches"] >= RQ4_MIN_MATCHES_PER_SIDE_FOR_DELTA
-    ) & (
-        delta["away_matches"] >= RQ4_MIN_MATCHES_PER_SIDE_FOR_DELTA
-    )
-
-    return delta[
-        [
-            "season",
-            "season_label",
-            "player",
-            "player_id",
-            "home_matches",
-            "away_matches",
-            "matches_total",
-            "home_avg_overall_rating",
-            "away_avg_overall_rating",
-            "avg_rating_delta_home_minus_away",
-            "abs_avg_rating_delta",
-            "home_median_overall_rating",
-            "away_median_overall_rating",
-            "home_best_overall_rating",
-            "away_best_overall_rating",
-            "home_worst_overall_rating",
-            "away_worst_overall_rating",
-            "home_starts",
-            "away_starts",
-            "home_motm_awards",
-            "away_motm_awards",
-            "home_teams",
-            "away_teams",
-            "eligible_both_sides",
-        ]
-    ].sort_values(
-        [
-            "season",
-            "abs_avg_rating_delta",
-            "avg_rating_delta_home_minus_away",
-            "player",
-        ],
-        ascending=[True, False, False, True],
-        kind="stable",
-    )
-
-
-def build_rq9_team_match_efficiency(
+def build_team_match_efficiency(
     rq9_df: pd.DataFrame,
     team_age_df: pd.DataFrame,
 ) -> pd.DataFrame:
@@ -336,9 +182,7 @@ def build_rq9_team_match_efficiency(
     ].sort_values(["season", "game_id", "team"], kind="stable")
 
 
-def build_rq9_team_age_vs_efficiency(
-    team_match_df: pd.DataFrame,
-) -> pd.DataFrame:
+def build_team_age_vs_efficiency(team_match_df: pd.DataFrame) -> pd.DataFrame:
     """Aggregate team efficiency against average age.
 
     Input: team-match DataFrame.
@@ -378,7 +222,7 @@ def build_rq9_team_age_vs_efficiency(
     )
 
 
-def build_rq9_player_age_profile(rq9_df: pd.DataFrame) -> pd.DataFrame:
+def build_player_age_profile(rq9_df: pd.DataFrame) -> pd.DataFrame:
     """Aggregate player efficiency by integer age band.
 
     Input: normalized RQ9 DataFrame.
@@ -461,14 +305,14 @@ def build_best_age_candidate(
     ]
 
 
-def build_rq9_player_best_age(rq9_df: pd.DataFrame) -> pd.DataFrame:
+def build_player_best_age(rq9_df: pd.DataFrame) -> pd.DataFrame:
     """Compute the strongest player age band per season and overall.
 
     Input: normalized RQ9 DataFrame.
     Output: DataFrame for `rq9_player_best_age.csv`.
     """
     rows = []
-    per_season_profile = build_rq9_player_age_profile(rq9_df)
+    per_season_profile = build_player_age_profile(rq9_df)
     for season, group in per_season_profile.groupby("season", sort=True):
         rows.append(build_best_age_candidate(group.copy(), str(season)))
 
@@ -582,7 +426,7 @@ def build_quadratic_model_row(
     }
 
 
-def build_rq9_optimal_age_summary(team_df: pd.DataFrame) -> pd.DataFrame:
+def build_optimal_age_summary(team_df: pd.DataFrame) -> pd.DataFrame:
     """Summarize RQ9 age-efficiency model results.
 
     Input: team summary DataFrame.
@@ -600,123 +444,48 @@ def build_rq9_optimal_age_summary(team_df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame.from_records(rows)
 
 
-def build_analysis_tables(
-    rq9_df: pd.DataFrame,
-    rq4_df: pd.DataFrame,
-) -> dict[str, pd.DataFrame]:
-    """Build all derived analysis tables used by the docs pages.
+def build_rq9_tables(rq9_df: pd.DataFrame) -> dict[str, pd.DataFrame]:
+    """Build all derived RQ9 tables.
 
-    Input: raw RQ9 and RQ4 DataFrames.
+    Input: raw RQ9 DataFrame.
     Output: dictionary from relative CSV path to DataFrame.
     """
-    rq9 = normalize_rq9(rq9_df)
-    rq4 = normalize_rq4(rq4_df)
-
-    season_age = build_season_age_summary(rq9)
-    team_age = build_team_age_summary(rq9)
-    rq4_ratings = build_rq4_home_away_player_ratings(rq4)
-    rq4_delta = build_rq4_player_home_away_delta(rq4_ratings)
-    rq9_match = build_rq9_team_match_efficiency(rq9, team_age)
-    rq9_team = build_rq9_team_age_vs_efficiency(rq9_match)
-    rq9_profile = build_rq9_player_age_profile(rq9)
-    rq9_best_age = build_rq9_player_best_age(rq9)
-    rq9_optimal = build_rq9_optimal_age_summary(rq9_team)
-
+    normalized = normalize_rq9(rq9_df)
+    season_age = build_season_age_summary(normalized)
+    team_age = build_team_age_summary(normalized)
+    team_match = build_team_match_efficiency(normalized, team_age)
+    team_efficiency = build_team_age_vs_efficiency(team_match)
+    age_profile = build_player_age_profile(normalized)
+    best_age = build_player_best_age(normalized)
+    optimal_age = build_optimal_age_summary(team_efficiency)
     return {
-        "other/bundesliga_season_age_summary.csv": season_age,
-        "other/bundesliga_team_age_summary.csv": team_age,
-        "rq4/rq4_home_away_player_ratings.csv": rq4_ratings,
-        "rq4/rq4_player_home_away_delta.csv": rq4_delta,
-        "rq9/rq9_team_match_efficiency.csv": rq9_match,
-        "rq9/rq9_team_age_vs_efficiency.csv": rq9_team,
-        "rq9/rq9_player_age_profile.csv": rq9_profile,
-        "rq9/rq9_player_best_age.csv": rq9_best_age,
-        "rq9/rq9_optimal_age_summary.csv": rq9_optimal,
+        SEASON_SUMMARY_FILE: season_age,
+        TEAM_SUMMARY_FILE: team_age,
+        TEAM_MATCH_FILE: team_match,
+        TEAM_EFFICIENCY_FILE: team_efficiency,
+        PLAYER_AGE_PROFILE_FILE: age_profile,
+        PLAYER_BEST_AGE_FILE: best_age,
+        OPTIMAL_AGE_FILE: optimal_age,
     }
 
 
-def load_raw_outputs(
-    input_dir: Path = DEFAULT_OUTPUT_DIR,
-) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Load the two raw pipeline CSV files from disk.
+def build_rq9_answer(
+    team_df: pd.DataFrame,
+    best_age_df: pd.DataFrame,
+    optimal_df: pd.DataFrame,
+) -> str:
+    """Build the short RQ9 answer string for the terminal output.
 
-    Input: directory with raw output files.
-    Output: tuple with `(rq9_df, rq4_df)`.
+    Input: team summary, best-age summary, and model summary DataFrames.
+    Output: formatted answer string.
     """
-    rq9_path = Path(input_dir) / RAW_RQ9_FILE
-    rq4_path = Path(input_dir) / RAW_RQ4_FILE
-
-    if not rq9_path.exists():
-        raise FileNotFoundError(f"Missing raw RQ9 file: {rq9_path}")
-    if not rq4_path.exists():
-        raise FileNotFoundError(f"Missing raw RQ4 file: {rq4_path}")
-
-    return pd.read_csv(rq9_path), pd.read_csv(rq4_path)
-
-
-def write_analysis_outputs(
-    tables: dict[str, pd.DataFrame],
-    output_root: Path = DEFAULT_DOCS_DATA_DIR,
-) -> list[Path]:
-    """Write all derived analysis tables to disk.
-
-    Input: table dictionary and output root path.
-    Output: list of written file paths.
-    """
-    written_paths: list[Path] = []
-    for relative_path, df in tables.items():
-        path = Path(output_root) / relative_path
-        path.parent.mkdir(parents=True, exist_ok=True)
-        df.to_csv(path, index=False)
-        written_paths.append(path)
-    return written_paths
-
-
-def build_terminal_answers(
-    tables: dict[str, pd.DataFrame],
-) -> dict[str, str]:
-    """Build short answer strings for the terminal output.
-
-    Input: dictionary with derived analysis tables.
-    Output: dictionary with short text answers for RQ4 and RQ9.
-    """
-    rq4_ratings = tables["rq4/rq4_home_away_player_ratings.csv"]
-    rq9_team = tables["rq9/rq9_team_age_vs_efficiency.csv"]
-    rq9_best_age = tables["rq9/rq9_player_best_age.csv"]
-    rq9_optimal = tables["rq9/rq9_optimal_age_summary.csv"]
-
-    rq4_home = rq4_ratings.loc[
-        rq4_ratings["eligible_for_leaderboard"]
-        & (rq4_ratings["home_away"] == "home"),
-        "avg_overall_rating",
-    ]
-    rq4_away = rq4_ratings.loc[
-        rq4_ratings["eligible_for_leaderboard"]
-        & (rq4_ratings["home_away"] == "away"),
-        "avg_overall_rating",
-    ]
-    mean_home = float(rq4_home.mean()) if not rq4_home.empty else np.nan
-    mean_away = float(rq4_away.mean()) if not rq4_away.empty else np.nan
-    mean_delta = mean_home - mean_away
-
-    top_home_row = rq4_ratings.loc[
-        rq4_ratings["eligible_for_leaderboard"]
-        & (rq4_ratings["home_away"] == "home")
-    ].head(1)
-    top_away_row = rq4_ratings.loc[
-        rq4_ratings["eligible_for_leaderboard"]
-        & (rq4_ratings["home_away"] == "away")
-    ].head(1)
-
-    best_age_row = rq9_best_age.loc[rq9_best_age["season"] != "all"].head(1)
+    best_age_row = best_age_df.loc[best_age_df["season"] != "all"].head(1)
     if best_age_row.empty:
-        best_age_row = rq9_best_age.head(1)
+        best_age_row = best_age_df.head(1)
 
-    optimal_row = rq9_optimal.loc[
-        rq9_optimal["scope"] == "single_season"
-    ].head(1)
+    optimal_row = optimal_df.loc[optimal_df["scope"] == "single_season"].head(1)
     if optimal_row.empty:
-        optimal_row = rq9_optimal.head(1)
+        optimal_row = optimal_df.head(1)
 
     pearson = (
         float(optimal_row.iloc[0]["pearson_r_age_efficiency"])
@@ -733,39 +502,15 @@ def build_terminal_answers(
         if not best_age_row.empty
         else np.nan
     )
-    min_team_age = (
-        float(rq9_team["avg_age"].min()) if not rq9_team.empty else np.nan
-    )
-    max_team_age = (
-        float(rq9_team["avg_age"].max()) if not rq9_team.empty else np.nan
-    )
+    min_team_age = float(team_df["avg_age"].min()) if not team_df.empty else np.nan
+    max_team_age = float(team_df["avg_age"].max()) if not team_df.empty else np.nan
     model_note = (
         str(optimal_row.iloc[0]["model_note"]).strip()
         if not optimal_row.empty
         else ""
     )
 
-    top_home_player = (
-        str(top_home_row.iloc[0]["player"])
-        if not top_home_row.empty
-        else "n/a"
-    )
-    top_away_player = (
-        str(top_away_row.iloc[0]["player"])
-        if not top_away_row.empty
-        else "n/a"
-    )
-
-    rq4_answer = (
-        "RQ4 | "
-        f"top_home={top_home_player} | "
-        f"top_away={top_away_player} | "
-        f"mean_home={mean_home:.3f} | "
-        f"mean_away={mean_away:.3f} | "
-        f"delta={mean_delta:+.3f}"
-    )
-
-    rq9_answer = (
+    answer = (
         "RQ9 | "
         f"pearson={pearson:.3f} | "
         f"team_age_range={min_team_age:.2f}-{max_team_age:.2f} | "
@@ -773,37 +518,5 @@ def build_terminal_answers(
         f"band_goals_per_shot={best_age_efficiency:.3f}"
     )
     if model_note and model_note.lower() != "nan":
-        rq9_answer = f"{rq9_answer} | quadratic_peak=outside_range"
-
-    return {"rq4": rq4_answer, "rq9": rq9_answer}
-
-
-def main(argv: Iterable[str] | None = None) -> int:
-    """Generate the analysis CSV files from existing raw outputs.
-
-    Input: optional iterable of CLI argument strings.
-    Output: process exit code.
-    """
-    parser = argparse.ArgumentParser(
-        description="Generate derived docs/data CSVs for RQ4 and RQ9."
-    )
-    parser.add_argument("--input-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
-    parser.add_argument(
-        "--output-root",
-        type=Path,
-        default=DEFAULT_DOCS_DATA_DIR,
-    )
-    args = parser.parse_args(list(argv) if argv is not None else None)
-
-    rq9_df, rq4_df = load_raw_outputs(args.input_dir)
-    tables = build_analysis_tables(rq9_df, rq4_df)
-    written_paths = write_analysis_outputs(tables, args.output_root)
-
-    print("[ok] Generated analysis CSVs:")
-    for path in written_paths:
-        print(f" - {path.resolve()}")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+        answer = f"{answer} | quadratic_peak=outside_range"
+    return answer
