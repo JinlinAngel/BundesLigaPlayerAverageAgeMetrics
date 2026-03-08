@@ -11,8 +11,8 @@ import pandas as pd
 
 
 BEST_AGE_MIN_TOTAL_SHOTS = 80
-SEASON_SUMMARY_FILE = "other/bundesliga_season_age_summary.csv"
-TEAM_SUMMARY_FILE = "other/bundesliga_team_age_summary.csv"
+SEASON_SUMMARY_FILE = "rq9/bundesliga_season_age_summary.csv"
+TEAM_SUMMARY_FILE = "rq9/bundesliga_team_age_summary.csv"
 TEAM_MATCH_FILE = "rq9/rq9_team_match_efficiency.csv"
 TEAM_EFFICIENCY_FILE = "rq9/rq9_team_age_vs_efficiency.csv"
 PLAYER_AGE_PROFILE_FILE = "rq9/rq9_player_age_profile.csv"
@@ -80,7 +80,7 @@ def build_season_age_summary(rq9_df: pd.DataFrame) -> pd.DataFrame:
     """Aggregate one age summary row per season.
 
     Input: normalized RQ9 DataFrame.
-    Output: DataFrame for `bundesliga_season_age_summary.csv`.
+    Output: DataFrame for `rq9/bundesliga_season_age_summary.csv`.
     """
     season_players = (
         rq9_df.groupby(["season", "season_label", "player_id"], dropna=False)
@@ -105,7 +105,7 @@ def build_team_age_summary(rq9_df: pd.DataFrame) -> pd.DataFrame:
     """Aggregate one age summary row per team.
 
     Input: normalized RQ9 DataFrame.
-    Output: DataFrame for `bundesliga_team_age_summary.csv`.
+    Output: DataFrame for `rq9/bundesliga_team_age_summary.csv`.
     """
     team_players = (
         rq9_df.groupby(
@@ -306,7 +306,7 @@ def build_best_age_candidate(
 
 
 def build_player_best_age(rq9_df: pd.DataFrame) -> pd.DataFrame:
-    """Compute the strongest player age band per season and overall.
+    """Compute the strongest player age band per season.
 
     Input: normalized RQ9 DataFrame.
     Output: DataFrame for `rq9_player_best_age.csv`.
@@ -315,48 +315,21 @@ def build_player_best_age(rq9_df: pd.DataFrame) -> pd.DataFrame:
     per_season_profile = build_player_age_profile(rq9_df)
     for season, group in per_season_profile.groupby("season", sort=True):
         rows.append(build_best_age_candidate(group.copy(), str(season)))
-
-    overall = rq9_df.dropna(subset=["age"]).copy()
-    overall["age_int"] = np.floor(overall["age"]).astype(int)
-    overall["player_season_key"] = (
-        overall["season"].astype(str)
-        + "::"
-        + overall["player_id"].astype(str)
-    )
-    overall_profile = (
-        overall.groupby("age_int", dropna=False)
-        .agg(
-            players=("player_season_key", "nunique"),
-            total_goals=("player_goals", "sum"),
-            total_shots=("player_shots", "sum"),
-        )
-        .reset_index()
-    )
-    overall_profile = overall_profile.loc[
-        overall_profile["total_shots"] > 0
-    ].copy()
-    overall_profile["goals_per_shot"] = safe_ratio(
-        overall_profile["total_goals"],
-        overall_profile["total_shots"],
-    )
-    rows.append(build_best_age_candidate(overall_profile, "all"))
     return pd.concat(rows, ignore_index=True)
 
 
 def build_quadratic_model_row(
-    scope: str,
     season: str,
     team_df: pd.DataFrame,
 ) -> dict[str, object]:
     """Fit one quadratic age-efficiency model summary row.
 
-    Input: scope label, season label, and team summary DataFrame.
+    Input: season label and team summary DataFrame.
     Output: dictionary with model summary values.
     """
     valid = team_df.dropna(subset=["avg_age", "goals_per_shot"]).copy()
     if valid.empty:
         return {
-            "scope": scope,
             "season": season,
             "n_teams": 0,
             "pearson_r_age_efficiency": np.nan,
@@ -371,7 +344,6 @@ def build_quadratic_model_row(
 
     if len(valid) < 3:
         return {
-            "scope": scope,
             "season": season,
             "n_teams": int(len(valid)),
             "pearson_r_age_efficiency": pearson,
@@ -387,7 +359,6 @@ def build_quadratic_model_row(
     )
     if quad_a >= 0:
         return {
-            "scope": scope,
             "season": season,
             "n_teams": int(len(valid)),
             "pearson_r_age_efficiency": pearson,
@@ -406,17 +377,15 @@ def build_quadratic_model_row(
             "one exact optimal team-average age."
         )
         return {
-            "scope": scope,
             "season": season,
             "n_teams": int(len(valid)),
             "pearson_r_age_efficiency": pearson,
-            "estimated_peak_age": np.nan,
-            "estimated_peak_goals_per_shot": np.nan,
+            "estimated_peak_age": float(peak_age),
+            "estimated_peak_goals_per_shot": float(peak_efficiency),
             "model_note": note,
         }
 
     return {
-        "scope": scope,
         "season": season,
         "n_teams": int(len(valid)),
         "pearson_r_age_efficiency": pearson,
@@ -427,16 +396,15 @@ def build_quadratic_model_row(
 
 
 def build_optimal_age_summary(team_df: pd.DataFrame) -> pd.DataFrame:
-    """Summarize RQ9 age-efficiency model results.
+    """Summarize RQ9 age-efficiency model results by season.
 
     Input: team summary DataFrame.
     Output: DataFrame for `rq9_optimal_age_summary.csv`.
     """
-    rows = [build_quadratic_model_row("all_seasons", "all", team_df)]
+    rows = []
     for season, group in team_df.groupby("season", sort=True):
         rows.append(
             build_quadratic_model_row(
-                "single_season",
                 str(season),
                 group.copy(),
             )
@@ -483,7 +451,7 @@ def build_rq9_answer(
     if best_age_row.empty:
         best_age_row = best_age_df.head(1)
 
-    optimal_row = optimal_df.loc[optimal_df["scope"] == "single_season"].head(1)
+    optimal_row = optimal_df.head(1)
     if optimal_row.empty:
         optimal_row = optimal_df.head(1)
 

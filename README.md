@@ -60,8 +60,9 @@ The pipeline writes exactly two raw source datasets to `data/outputs/`:
     `home_away`, `overall_rating`, `is_starting_xi`,
     `is_man_of_the_match`
 
-The analysis step also writes derived CSV files under `docs/data/` for the
-website charts and text.
+The analysis step also writes derived CSV files under
+`docs/analysis_diagram_data/rq4/` and
+`docs/analysis_diagram_data/rq9/` for the website charts and text.
 
 ## Notes
 

@@ -27,6 +27,11 @@ from whoscored_data_download_pipeline import build_whoscored_dataset
 
 ESPN_OUTPUT_NAME = "espn_player_match_data_for_rq9.csv"
 WHOSCORED_OUTPUT_NAME = "whoscored_player_match_data_for_rq4.csv"
+ANALYSIS_OUTPUT_ROOT = (
+    Path(__file__).resolve().parent
+    / "docs"
+    / "analysis_diagram_data"
+)
 
 
 def write_output(df: pd.DataFrame, path: Path) -> None:
@@ -120,7 +125,7 @@ def build_analysis_tables(
 
 def write_analysis_outputs(
     tables: dict[str, pd.DataFrame],
-    output_root: Path = Path(__file__).resolve().parent / "docs" / "data",
+    output_root: Path = ANALYSIS_OUTPUT_ROOT,
 ) -> list[Path]:
     """Write all derived analysis tables to disk.
 
