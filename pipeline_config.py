@@ -16,7 +16,7 @@ from pipeline_utils import DEFAULT_LEAGUE, TARGET_SEASON
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent
-DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "data" / "outputs"
+DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "data" / "downloaded_outputs_to_analyse"
 
 
 @dataclass(frozen=True)

@@ -48,7 +48,8 @@ python main.py --refresh
 
 ## Output Files
 
-The pipeline writes exactly two raw source datasets to `data/outputs/`:
+The pipeline writes exactly two raw source datasets to
+`data/downloaded_outputs_to_analyse/`:
 
 - `espn_player_match_data_for_rq9.csv`
   - one row per `match x team x player`
